@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="es" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Martín Aguirre Herrera — Carta</title>
+  <meta name="description" content="Martín Aguirre Herrera · Estudiante de Publicidad · Social Media &amp; Content. Mi CV se sirve a la carta.">
+  <meta name="theme-color" content="#0D0D0C">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Klee+One:wght@400;600&family=Shippori+Mincho:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- ============================================================
+       Tinta y materia: filtros SVG compartidos (no son imágenes:
+       son procesos que dan rugosidad de pincel y de impresión).
+       ============================================================ -->
+  <svg class="defs" width="0" height="0" aria-hidden="true" focusable="false">
+    <defs>
+      <!-- Borde irregular de tinta sobre papel -->
+      <filter id="f-ink" x="-5%" y="-40%" width="110%" height="180%" color-interpolation-filters="sRGB">
+        <feTurbulence type="fractalNoise" baseFrequency="0.09" numOctaves="2" seed="4" result="warp"/>
+        <feDisplacementMap in="SourceGraphic" in2="warp" scale="3.2" xChannelSelector="R" yChannelSelector="G"/>
+      </filter>
+
+      <!-- Trazo de pincel corto (subrayados rojos) -->
+      <symbol id="brush-line" viewBox="0 0 200 14" preserveAspectRatio="none">
+        <path d="M1.5 8.6 C 22 5.4, 60 4.1, 104 4.3 C 140 4.4, 172 4.9, 198.5 6.2 C 186 7.6, 160 8.7, 128 9.6 C 88 10.8, 44 11.1, 3 10.6 C 1.2 10.2, 0.6 9.4, 1.5 8.6 Z"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <main class="scene" id="scene">
+
+    <!-- La carta: un único objeto con dos tapas que giran sobre el lomo -->
+    <div class="book" id="book" data-state="closed" data-side="left">
+
+      <div class="book__shadow" aria-hidden="true"></div>
+
+      <!-- =========================================================
+           TAPA DELANTERA
+           cara exterior = portada · cara interior = página izquierda
+           ========================================================= -->
+      <div class="board board--front">
+
+        <!-- PORTADA -->
+        <section class="face face--cover cover" id="face-cover" aria-label="Portada de la carta">
+          <div class="cover__grain" aria-hidden="true"></div>
+
+          <div class="binding binding--left" aria-hidden="true">
+            <span class="binding__groove"></span>
+            <span class="binding__thread"></span>
+            <span class="binding__stitch" style="--y: 12%"></span>
+            <span class="binding__stitch" style="--y: 37.3%"></span>
+            <span class="binding__stitch" style="--y: 62.7%"></span>
+            <span class="binding__stitch" style="--y: 88%"></span>
+          </div>
+
+          <span class="seal cover__seal" aria-hidden="true"></span>
+
+          <div class="cover__title">
+            <h1 class="cover__name">
+              <span>Martín</span>
+              <span>Aguirre Herrera</span>
+            </h1>
+            <p class="cover__role">
+              <span>Estudiante de Publicidad</span>
+              <span>Social Media &amp; Content</span>
+            </p>
+            <svg class="brush cover__brush" aria-hidden="true" focusable="false"><use href="#brush-line"/></svg>
+          </div>
+
+          <p class="cover__motto hand">
+            <span>Mi CV se sirve</span>
+            <span>a la carta.</span>
+          </p>
+
+          <!-- Sol y ola: capas independientes (trazos de pincel en SVG) -->
+          <img class="decor cover__sun" src="assets/decor/sol-portada.svg" alt="" aria-hidden="true">
+          <img class="decor cover__wave" src="assets/decor/ola-portada.svg" alt="" aria-hidden="true">
+
+          <span class="cover__edge" aria-hidden="true"></span>
+
+          <!-- Toda la portada es el gesto de apertura -->
+          <button class="face__hit" type="button" data-action="open" aria-label="Abrir la carta"></button>
+        </section>
+
+        <!-- PÁGINA IZQUIERDA -->
+        <section class="face face--inside face--left" id="face-left" aria-label="Carta abierta, página izquierda">
+          <article class="page page--left">
+            <div class="paper" aria-hidden="true"></div>
+
+            <header class="masthead">
+              <p class="kicker">Selección de la casa</p>
+              <h2 class="masthead__name" id="page-start" tabindex="-1">Martín Aguirre Herrera</h2>
+              <p class="masthead__role">Estudiante de Publicidad <span class="sep" aria-hidden="true">·</span> Social Media &amp; Content</p>
+              <svg class="brush masthead__brush" aria-hidden="true" focusable="false"><use href="#brush-line"/></svg>
+            </header>
+
+            <section class="block block--about" aria-labelledby="h-about">
+              <h3 class="heading" id="h-about">Sobre mí</h3>
+              <p>Soy estudiante de Publicidad con especial interés en Social Media, contenido y creatividad.</p>
+              <p>Me gusta proponer ideas, presentarlas y desarrollarlas hasta que cada parte tenga sentido dentro de un concepto.</p>
+              <p>Busco una práctica donde pueda aprender, aportar y seguir ampliando mi forma de mirar la publicidad, explorando distintas áreas y desarrollando una mirada cada vez más versátil.</p>
+            </section>
+
+            <section class="block block--traits" aria-labelledby="h-traits">
+              <h3 class="heading" id="h-traits">Mi forma de trabajar</h3>
+              <!-- data-dish: rasgo que, en etapas siguientes, sirve el plato -->
+              <ul class="traits">
+                <li class="trait" data-trait="creativo" data-dish="omakase">Creativo</li>
+                <li class="trait" data-trait="curioso">Curioso</li>
+                <li class="trait" data-trait="espontaneo" data-dish="wasabi">Espontáneo</li>
+                <li class="trait" data-trait="colaborativo">Colaborativo</li>
+                <li class="trait" data-trait="prolijo" data-dish="nigiri">Prolijo</li>
+              </ul>
+              <p class="hand quote quote--traits">
+                <span>“Cuando tengo una idea,</span>
+                <span>intento llevarla lo más lejos posible.”</span>
+              </p>
+            </section>
+
+            <section class="block block--chef" aria-labelledby="h-chef">
+              <h3 class="heading" id="h-chef">Selección del chef</h3>
+              <p class="block__lead">Tres formas de entender mi creatividad.</p>
+
+              <ul class="dishes">
+                <li class="dish" data-dish="nigiri" data-trait="prolijo">
+                  <button class="dish__hotspot" type="button" data-dish="nigiri" aria-expanded="false" aria-controls="serving-nigiri">
+                    <span class="dish__plate">
+                      <span class="dish__ground" aria-hidden="true"></span>
+                      <img class="dish__photo" data-src="assets/products/nigiri.png" alt="" decoding="async">
+                    </span>
+                    <span class="dish__pin" aria-hidden="true"></span>
+                    <span class="dish__label">
+                      <span class="dish__name">Nigiri</span>
+                      <span class="dish__jp" lang="ja">にぎり</span>
+                    </span>
+                    <span class="dish__meaning hand">Prolijidad</span>
+                  </button>
+                </li>
+                <li class="dish" data-dish="wasabi" data-trait="espontaneo">
+                  <button class="dish__hotspot" type="button" data-dish="wasabi" aria-expanded="false" aria-controls="serving-wasabi">
+                    <span class="dish__plate">
+                      <span class="dish__ground" aria-hidden="true"></span>
+                      <img class="dish__photo" data-src="assets/products/wasabi.png" alt="" decoding="async">
+                    </span>
+                    <span class="dish__pin" aria-hidden="true"></span>
+                    <span class="dish__label">
+                      <span class="dish__name">Wasabi</span>
+                      <span class="dish__jp" lang="ja">わさび</span>
+                    </span>
+                    <span class="dish__meaning hand">Atrevimiento</span>
+                  </button>
+                </li>
+                <li class="dish" data-dish="omakase" data-trait="creativo">
+                  <button class="dish__hotspot" type="button" data-dish="omakase" aria-expanded="false" aria-controls="serving-omakase">
+                    <span class="dish__plate">
+                      <span class="dish__ground" aria-hidden="true"></span>
+                      <img class="dish__photo" data-src="assets/products/omakase.png" alt="" decoding="async">
+                    </span>
+                    <span class="dish__pin" aria-hidden="true"></span>
+                    <span class="dish__label">
+                      <span class="dish__name">Omakase</span>
+                      <span class="dish__jp" lang="ja">おまかせ</span>
+                    </span>
+                    <span class="dish__meaning hand">Llevar una idea más lejos</span>
+                  </button>
+                </li>
+              </ul>
+            </section>
+
+            <span class="seal page__seal" aria-hidden="true"></span>
+            <div class="decor page__mountains" data-asset="assets/decor/montanas-sumi.png" aria-hidden="true"></div>
+
+          </article>
+          <span class="gutter gutter--left" aria-hidden="true"></span>
+        </section>
+      </div>
+
+      <!-- =========================================================
+           TAPA TRASERA
+           cara interior = página derecha · cara exterior = contraportada
+           ========================================================= -->
+      <div class="board board--back">
+
+        <!-- PÁGINA DERECHA -->
+        <section class="face face--inside face--right" id="face-right" aria-label="Carta abierta, página derecha">
+          <article class="page page--right">
+            <div class="paper" aria-hidden="true"></div>
+
+            <section class="block block--offer" aria-labelledby="h-offer">
+              <p class="kicker">Perfil</p>
+              <h2 class="heading heading--lead" id="h-offer">Qué aporto</h2>
+              <svg class="brush offer__brush" aria-hidden="true" focusable="false"><use href="#brush-line"/></svg>
+              <ul class="offer">
+                <li>Creatividad conceptual</li>
+                <li>Desarrollo de ideas</li>
+                <li>Presentación y comunicación</li>
+                <li>Contenido para redes sociales</li>
+                <li>Trabajo en equipo</li>
+                <li>Ganas de aprender y aportar</li>
+              </ul>
+            </section>
+
+            <section class="block block--tools" aria-labelledby="h-tools">
+              <h3 class="heading" id="h-tools">Herramientas</h3>
+              <ul class="inline-list inline-list--tools">
+                <li>Canva</li><li>CapCut</li><li>TikTok</li><li>Instagram</li>
+                <li>Photoshop</li><li><abbr title="Inteligencia Artificial">IA</abbr></li><li>Meta Business</li>
+              </ul>
+            </section>
+
+            <section class="block block--interests" aria-labelledby="h-interests">
+              <h3 class="heading" id="h-interests">Intereses</h3>
+              <ul class="inline-list">
+                <li>Gastronomía</li><li>Música</li><li>Deportes</li><li>Cine</li>
+              </ul>
+              <p class="hand quote quote--interests">“Lo que consumo también alimenta lo que creo.”</p>
+            </section>
+
+            <div class="ledger">
+              <section class="ledger__item" aria-labelledby="h-edu">
+                <h3 class="label" id="h-edu">Formación</h3>
+                <p class="ledger__lead">Publicidad</p>
+                <p>Universidad Finis Terrae</p>
+                <p>4° año</p>
+                <p class="ledger__note">Egreso estimado:<br>primer semestre de 2027</p>
+              </section>
+
+              <section class="ledger__item" aria-labelledby="h-lang">
+                <h3 class="label" id="h-lang">Idiomas</h3>
+                <dl class="leaders">
+                  <div><dt>Español</dt><dd>Nativo</dd></div>
+                  <div><dt>Inglés</dt><dd>B1</dd></div>
+                </dl>
+              </section>
+
+              <section class="ledger__item" aria-labelledby="h-contact">
+                <h3 class="label" id="h-contact">Contacto</h3>
+                <address class="contact">
+                  <span>Santiago, Chile</span>
+                  <a href="mailto:martinaguirre2002@gmail.com">martinaguirre2002@gmail.com</a>
+                  <a href="tel:+56973866688">+56 9 7386 6688</a>
+                </address>
+              </section>
+
+              <section class="ledger__item ledger__item--availability" aria-labelledby="h-avail">
+                <h3 class="label" id="h-avail">Práctica</h3>
+                <p class="availability">Disponible desde<br>diciembre de 2026.</p>
+                <p class="ledger__note">Duración aproximada: 3 meses.</p>
+              </section>
+            </div>
+
+            <div class="decor page__sakura" data-asset="assets/decor/rama-sakura.png" aria-hidden="true"></div>
+            <div class="decor page__mountains page__mountains--right" data-asset="assets/decor/montanas-sumi.png" aria-hidden="true"></div>
+
+          </article>
+          <span class="gutter gutter--right" aria-hidden="true"></span>
+        </section>
+
+        <!-- CONTRAPORTADA -->
+        <section class="face face--backcover cover cover--back" id="face-back" aria-label="Contraportada de la carta">
+          <div class="cover__grain" aria-hidden="true"></div>
+
+          <!-- el reverso solo deja ver la bisagra del lomo, como en la referencia -->
+          <div class="binding binding--right" aria-hidden="true">
+            <span class="binding__groove"></span>
+          </div>
+
+          <div class="back__colophon">
+            <span class="seal back__seal" aria-hidden="true"></span>
+            <p class="back__name">Martín Aguirre Herrera</p>
+            <p class="back__role">Publicidad <span aria-hidden="true">·</span> Social Media &amp; Content</p>
+            <span class="back__rule" aria-hidden="true"></span>
+          </div>
+
+          <img class="decor back__wave" src="assets/decor/ola-contraportada.svg" alt="" aria-hidden="true">
+
+          <span class="cover__edge" aria-hidden="true"></span>
+
+          <button class="face__hit" type="button" data-action="open-back" aria-label="Volver a abrir la carta"></button>
+        </section>
+      </div>
+
+      <!-- =========================================================
+           SERVICIO (etapas 2–4)
+           Contenedores reservados para Nigiri / Wasabi / Omakase.
+           Permanecen vacíos y ocultos en la etapa 1.
+           ========================================================= -->
+      <div class="servings" id="servings" hidden>
+        <section class="serving" id="serving-nigiri" data-dish="nigiri" aria-label="Nigiri — Prolijidad" hidden></section>
+        <section class="serving" id="serving-wasabi" data-dish="wasabi" aria-label="Wasabi — Atrevimiento" hidden></section>
+        <section class="serving" id="serving-omakase" data-dish="omakase" aria-label="Omakase — Llevar una idea más lejos" hidden></section>
+      </div>
+    </div>
+
+    <!-- Sobre la mesa, fuera del objeto: indicaciones mínimas -->
+    <p class="table-hint" aria-hidden="true">
+      <span class="table-hint__text" data-for="closed">Abrir la carta</span>
+      <span class="table-hint__text" data-for="back">Volver a abrir</span>
+    </p>
+    <nav class="table-nav" aria-label="Pasar de cara">
+      <button class="table-nav__link table-nav__link--front" type="button" data-action="close-front">Portada</button>
+      <button class="table-nav__link table-nav__link--back" type="button" data-action="close-back">Contraportada</button>
+    </nav>
+  </main>
+
+  <script src="js/interactions.js" defer></script>
+</body>
+</html>
