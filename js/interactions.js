@@ -237,6 +237,12 @@
     s.serving.classList.add("is-apart");
     await wait(beat(s, "open", 1, layered ? 750 : 0));
     if (token !== serveToken) return;
+    // estación intermedia opcional (data-further="espera al abrir,espera al cerrar")
+    if (s.serving.dataset.further) {
+      s.serving.classList.add("is-further");
+      await wait(beat(s, "further", 0, 0));
+      if (token !== serveToken) return;
+    }
     s.serving.classList.add("is-annotated");
   }
 
@@ -251,6 +257,10 @@
     s.serving.classList.add("is-closing");
     s.serving.classList.remove("is-annotated");
     await wait(beat(s, "close", 0, 280));
+    if (s.serving.classList.contains("is-further")) {
+      s.serving.classList.remove("is-further");
+      await wait(beat(s, "further", 1, 0));
+    }
     s.serving.classList.remove("is-apart");
     // la foto entera vuelve mientras las capas terminan de juntarse
     await wait(beat(s, "close", 1, layered ? 420 : 0));
