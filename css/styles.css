@@ -1200,3 +1200,144 @@ abbr[title] { text-decoration: none; }
 .serving.is-annotated .serving__note:nth-child(2) { transition-delay: .6s; }
 .serving.is-annotated .serving__note:nth-child(3) { transition-delay: .85s; }
 .serving.is-annotated .serving__quote { transition-delay: 1.4s; transform: rotate(-1.2deg); }
+
+/* ---------- 11. Servicio Wasabi (etapa 3) ----------
+   Reconocible: la pieza, contenida en un círculo fino.
+   Giro: una pincelada sumi la atraviesa, el círculo se abre y la pieza gira.
+   Impacto: salpicadura roja mínima y la frase. */
+
+.serving--wasabi .serving__stack {
+  left: 0;
+  top: calc(var(--u) * 2.4);
+  width: calc(var(--u) * 22.4);
+  height: calc(var(--u) * 22.4);
+}
+.wsb__tilt {
+  position: absolute;
+  inset: 0;
+  transform-origin: 50% 62%;
+  transition: transform .75s cubic-bezier(.34, 1.3, .5, 1);
+}
+.serving--wasabi .serving__ground {
+  left: 22%;
+  right: 22%;
+  bottom: calc(var(--u) * 2.9);
+  height: calc(var(--u) * 1.8);
+}
+.serving--wasabi.is-apart .wsb__tilt { transform: translate(calc(var(--u) * 1.2), calc(var(--u) * -.6)) rotate(-9deg); }
+.serving--wasabi.is-annotated .wsb__tilt { animation: wsb-punch .5s cubic-bezier(.3, 1.6, .5, 1) .15s both; }
+@keyframes wsb-punch {
+  0%   { transform: translate(calc(var(--u) * 1.2), calc(var(--u) * -.6)) rotate(-9deg) scale(1); }
+  45%  { transform: translate(calc(var(--u) * 1.2), calc(var(--u) * -.6)) rotate(-11deg) scale(1.05); }
+  100% { transform: translate(calc(var(--u) * 1.2), calc(var(--u) * -.6)) rotate(-9deg) scale(1.02); }
+}
+
+.wsb__ring,
+.wsb__splash {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+.wsb__ring circle {
+  fill: none;
+  stroke: color-mix(in srgb, var(--ink) 55%, transparent);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transform-origin: 112px 134px;
+  transform: rotate(-90deg);
+  transition: stroke-dashoffset .5s ease, transform .9s cubic-bezier(.3, .6, .25, 1), stroke .4s ease;
+}
+.serving--wasabi.is-split .wsb__ring circle { stroke-dashoffset: 0; transition-duration: .9s, .9s, .4s; }
+.serving--wasabi.is-apart .wsb__ring circle {
+  stroke-dashoffset: .32;
+  transform: rotate(40deg);
+  stroke: color-mix(in srgb, var(--red) 60%, transparent);
+}
+
+.wsb__stroke {
+  position: absolute;
+  inset: 0;
+  background: url("../assets/decor/giro-wasabi.svg") no-repeat center / 100% 100%;
+  opacity: .84;
+  mix-blend-mode: multiply;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path .45s cubic-bezier(.5, 0, .75, 0);
+  pointer-events: none;
+}
+.serving--wasabi.is-apart .wsb__stroke {
+  clip-path: inset(0 0 0 0);
+  transition: clip-path 1s cubic-bezier(.55, .05, .25, 1) .08s;
+}
+
+.wsb__splash circle,
+.wsb__splash ellipse {
+  fill: var(--red);
+  transform-box: fill-box;
+  transform-origin: center;
+  transform: scale(0);
+  opacity: 0;
+  transition: transform .2s ease, opacity .2s ease;
+}
+.serving--wasabi.is-annotated .wsb__splash circle,
+.serving--wasabi.is-annotated .wsb__splash ellipse {
+  transform: scale(1);
+  opacity: .9;
+  transition: transform .45s cubic-bezier(.3, 1.8, .5, 1), opacity .2s ease;
+}
+.serving--wasabi.is-annotated .wsb__splash g > :nth-child(2) { transition-delay: .06s; }
+.serving--wasabi.is-annotated .wsb__splash g > :nth-child(3) { transition-delay: .1s; }
+.serving--wasabi.is-annotated .wsb__splash g > :nth-child(4) { transition-delay: .14s; }
+.serving--wasabi.is-annotated .wsb__splash g > :nth-child(5) { transition-delay: .18s; }
+.serving--wasabi.is-annotated .wsb__splash g > :nth-child(6) { transition-delay: .22s; }
+
+.wsb__beat {
+  position: absolute;
+  left: calc(var(--u) * var(--x));
+  top: calc(var(--u) * var(--y));
+  width: calc(var(--u) * 14.5);
+  opacity: 0;
+  transform: translateY(calc(var(--u) * .6));
+  transition: opacity .25s ease, transform .25s ease;
+}
+.wsb__beat dt {
+  font-family: var(--f-mincho);
+  font-weight: 500;
+  font-size: calc(var(--u) * 1.1);
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.wsb__beat dt::after { /* trazo corto de pincel bajo cada concepto */
+  content: "";
+  display: block;
+  width: calc(var(--u) * 3.2);
+  height: calc(var(--u) * .28);
+  margin-top: calc(var(--u) * .5);
+  background: var(--red);
+  border-radius: 0 50% 50% 0 / 0 100% 100% 0;
+  opacity: .85;
+}
+.page .wsb__beat dd {
+  margin-top: calc(var(--u) * .5);
+  font-size: calc(var(--u) * 1.8);
+  line-height: 1.3;
+  color: var(--ink-soft);
+}
+.serving--wasabi.is-split .wsb__beat:nth-child(1),
+.serving--wasabi.is-apart .wsb__beat:nth-child(2),
+.serving--wasabi.is-annotated .wsb__beat:nth-child(3) {
+  opacity: 1;
+  transform: none;
+  transition: opacity .6s ease .35s, transform .6s ease .35s;
+}
+.serving--wasabi.is-apart .wsb__beat:nth-child(2) { transition-delay: .6s; }
+.serving--wasabi.is-annotated .wsb__beat:nth-child(3) { transition-delay: .25s; }
+
+.page .wsb__quote { left: calc(var(--u) * 2); right: calc(var(--u) * 2); }
+.serving--wasabi .serving__quote { opacity: 0; transform: translateY(calc(var(--u) * .6)); transition: opacity .25s ease, transform .25s ease; }
+.serving--wasabi.is-annotated .serving__quote { opacity: 1; transform: rotate(-1.6deg); transition: opacity .7s ease 1s, transform .7s ease 1s; }

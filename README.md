@@ -7,7 +7,7 @@ Abrir `index.html` en el navegador (no requiere servidor ni compilación).
 
 ## Estado
 
-**Etapa 1 — aprobada. Etapa 2 (Nigiri) — en revisión.**
+**Etapas 1 y 2 (Nigiri) — aprobadas. Etapa 3 (Wasabi) — en revisión.**
 Portada · apertura · doble página interior · Nigiri / Wasabi / Omakase en estado cerrado · contraportada.
 
 Las etapas 2–5 (interacciones de cada plato, pulido responsive y publicación) no están desarrolladas.
@@ -40,6 +40,7 @@ references/                referencias visuales maestras
 | `assets/decor/*.svg`               | Sol y olas de pincel seco                                    |
 | `assets/decor/montanas-sumi.png`   | Montañas sumi-e al pie de las páginas                        |
 | `assets/decor/rama-sakura.png`     | Rama de cerezo en el borde derecho                           |
+| `assets/decor/giro-wasabi.svg`     | Pincelada sumi del «giro» (servicio Wasabi)                  |
 | `assets/products/nigiri.png`       | Selección del chef — Nigiri                                  |
 | `assets/products/wasabi.png`       | Selección del chef — Wasabi                                  |
 | `assets/products/omakase.png`      | Selección del chef — Omakase                                 |

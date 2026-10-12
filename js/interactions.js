@@ -159,7 +159,7 @@
   /* ---------------------------------------------------------------
      Platos (etapas 2–4)
      Arquitectura lista: cada hotspot conoce su plato y su rasgo.
-     Nigiri abre su servicio (etapa 2); Wasabi y Omakase aún no.
+     Nigiri (etapa 2) y Wasabi (etapa 3) abren su servicio; Omakase aún no.
      --------------------------------------------------------------- */
 
   /* Solo existe un servicio abierto a la vez. Un plato tiene interacción
@@ -205,10 +205,18 @@
     return anim.finished.catch(() => {});
   }
 
+  // tiempos entre fases: data-open="tras reconocer,tras girar" · data-close="…"
+  function beat(s, key, i, fallback) {
+    if (quick()) return 0;
+    const list = s.serving.dataset[key];
+    return list ? Number(list.split(",")[i]) || 0 : fallback;
+  }
+
   async function openServing(dish) {
     const s = servingFor(dish);
     if (!s || book.dataset.state !== "open") return;
-    if (served) await closeServing();
+    // relevo en la misma página: el texto no reaparece entre un plato y otro
+    if (served) await closeServing(served.page === s.page);
 
     const token = ++serveToken;
     served = s;
@@ -221,29 +229,33 @@
     await flight(s, false);
     if (token !== serveToken) return;
 
+    const layered = s.serving.classList.contains("has-layers");
     s.serving.classList.add("is-split");
     await frame();
+    await wait(beat(s, "open", 0, 0));
+    if (token !== serveToken) return;
     s.serving.classList.add("is-apart");
-    if (s.serving.classList.contains("has-layers")) await wait(quick() ? 0 : 750);
+    await wait(beat(s, "open", 1, layered ? 750 : 0));
     if (token !== serveToken) return;
     s.serving.classList.add("is-annotated");
   }
 
-  async function closeServing() {
+  async function closeServing(handoff = false) {
     const s = served;
     if (!s) return;
     const token = ++serveToken;
     served = null;
     s.hotspot.setAttribute("aria-expanded", "false");
 
+    const layered = s.serving.classList.contains("has-layers");
     s.serving.classList.remove("is-annotated");
-    await wait(quick() ? 0 : 280);
+    await wait(beat(s, "close", 0, 280));
     s.serving.classList.remove("is-apart");
     // la foto entera vuelve mientras las capas terminan de juntarse
-    if (s.serving.classList.contains("has-layers")) await wait(quick() ? 0 : 420);
+    await wait(beat(s, "close", 1, layered ? 420 : 0));
     s.serving.classList.remove("is-split");
-    if (s.serving.classList.contains("has-layers")) await wait(quick() ? 0 : 260);
-    s.page.classList.remove("is-serving");
+    await wait(beat(s, "close", 2, layered ? 260 : 0));
+    if (!handoff) s.page.classList.remove("is-serving");
     await flight(s, true);
 
     if (token !== serveToken) return;
