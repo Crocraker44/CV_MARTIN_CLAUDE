@@ -248,6 +248,7 @@
     s.hotspot.setAttribute("aria-expanded", "false");
 
     const layered = s.serving.classList.contains("has-layers");
+    s.serving.classList.add("is-closing");
     s.serving.classList.remove("is-annotated");
     await wait(beat(s, "close", 0, 280));
     s.serving.classList.remove("is-apart");
@@ -258,6 +259,7 @@
     if (!handoff) s.page.classList.remove("is-serving");
     await flight(s, true);
 
+    s.serving.classList.remove("is-closing");
     if (token !== serveToken) return;
     s.item.classList.remove("is-served");
     s.serving.hidden = true;

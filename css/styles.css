@@ -1121,7 +1121,6 @@ abbr[title] { text-decoration: none; }
 .serving.is-apart .serving__layer[data-layer="pescado"]    { transform: translateY(calc(var(--u) * -7)); }
 .serving.is-apart .serving__layer[data-layer="union"]      { transform: translateY(calc(var(--u) * 3.6)) scale(.58); }
 .serving.is-apart .serving__layer[data-layer="arroz"]      { transform: translateY(calc(var(--u) * 12.6)); }
-.serving.is-apart .serving__layer[data-layer="particulas"] { transform: scale(1.08); }
 
 /* líneas guía, conceptos y frase: aparecen en orden al abrir, salen juntas al cerrar */
 .serving__guides {
@@ -1341,3 +1340,133 @@ abbr[title] { text-decoration: none; }
 .page .wsb__quote { left: calc(var(--u) * 2); right: calc(var(--u) * 2); }
 .serving--wasabi .serving__quote { opacity: 0; transform: translateY(calc(var(--u) * .6)); transition: opacity .25s ease, transform .25s ease; }
 .serving--wasabi.is-annotated .serving__quote { opacity: 1; transform: rotate(-1.6deg); transition: opacity .7s ease 1s, transform .7s ease 1s; }
+
+/* ---------- 12. Servicio Omakase (etapa 4) ----------
+   Idea: la pieza, tal cual, al inicio de una línea de emplatado.
+   Desarrollo: avanza y crece; su estado anterior queda como borrador.
+   Resolución: llega a su mejor versión y recibe el sello del chef. */
+
+.omk__travel {
+  position: absolute;
+  left: calc(var(--u) * 35);
+  top: calc(var(--u) * 7.75);
+  width: calc(var(--u) * 26);
+  height: calc(var(--u) * 26);
+  transform-origin: 0 0;
+  transform: translate(calc(var(--u) * -34), calc(var(--u) * 10.75)) scale(.5385);
+  transition: transform 1s cubic-bezier(.45, .05, .2, 1);
+}
+.serving--omakase.is-apart .omk__travel { transform: translate(calc(var(--u) * -19), calc(var(--u) * 6.25)) scale(.7308); }
+.serving--omakase.is-annotated .omk__travel { transform: none; }
+.serving--omakase .serving__ground {
+  left: 20%;
+  right: 20%;
+  bottom: calc(var(--u) * 2.1);
+  height: calc(var(--u) * 2.2);
+}
+.serving--omakase.is-annotated .serving__ground { opacity: 1; filter: contrast(1.25); }
+
+.omk__ghost {
+  position: absolute;
+  max-width: none;
+  object-fit: contain;
+  opacity: 0;
+  filter: grayscale(1) sepia(.2) contrast(.85) brightness(1.06);
+  mix-blend-mode: multiply;
+  transition: opacity .3s ease;
+}
+.omk__ghost--a { left: calc(var(--u) * 1);  top: calc(var(--u) * 18.5); width: calc(var(--u) * 14); height: calc(var(--u) * 14); }
+.omk__ghost--b { left: calc(var(--u) * 16); top: calc(var(--u) * 14);   width: calc(var(--u) * 19); height: calc(var(--u) * 19); }
+.serving--omakase.is-apart .omk__ghost--a,
+.serving--omakase.is-annotated .omk__ghost--b { opacity: .2; transition: opacity .9s ease .25s; }
+
+.omk__line {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+.omk__run {
+  fill: none;
+  stroke: color-mix(in srgb, var(--ink) 45%, transparent);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset .4s ease;
+}
+.serving--omakase.is-split .omk__run--a { stroke-dashoffset: .82; transition-duration: .6s; }
+.serving--omakase.is-apart .omk__run--a { stroke-dashoffset: 0; transition: stroke-dashoffset 1s cubic-bezier(.45, .05, .2, 1); }
+.serving--omakase.is-annotated .omk__run--b { stroke-dashoffset: 0; transition: stroke-dashoffset 1s cubic-bezier(.45, .05, .2, 1); }
+
+.omk__seal {
+  position: absolute;
+  left: calc(var(--u) * 57.4);
+  top: calc(var(--u) * 10.4);
+  width: calc(var(--u) * 3.8);
+  mix-blend-mode: multiply;
+  opacity: 0;
+  transform: scale(1.35) rotate(-4deg);
+  transition: opacity .2s ease, transform .2s ease;
+}
+.serving--omakase.is-annotated .omk__seal {
+  opacity: .9;
+  transform: scale(1) rotate(-2deg);
+  transition: opacity .25s ease .95s, transform .35s cubic-bezier(.2, .9, .3, 1.15) .95s;
+}
+
+.omk__step {
+  position: absolute;
+  left: calc(var(--u) * (var(--x) - var(--w) / 2));
+  top: calc(var(--u) * 33.2);
+  width: calc(var(--u) * var(--w));
+  text-align: center;
+  opacity: 0;
+  transform: translateY(calc(var(--u) * .5));
+  transition: opacity .25s ease, transform .25s ease;
+}
+.omk__step dt {
+  position: relative;
+  font-family: var(--f-mincho);
+  font-weight: 500;
+  font-size: calc(var(--u) * 1.1);
+  letter-spacing: .3em;
+  padding-left: .3em; /* compensa el tracking final */
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.omk__tick { /* marca sobre la línea de emplatado */
+  position: absolute;
+  left: 50%;
+  top: calc(var(--u) * -2.45);
+  width: calc(var(--u) * .7);
+  height: calc(var(--u) * .7);
+  border-radius: 50%;
+  background: var(--ink);
+  transform: translateX(-50%);
+}
+.omk__step:nth-child(3) .omk__tick { background: var(--red); }
+.page .omk__step dd {
+  margin-top: calc(var(--u) * .55);
+  font-size: calc(var(--u) * 1.8);
+  line-height: 1.3;
+  color: var(--ink-soft);
+}
+.serving--omakase.is-split .omk__step:nth-child(1),
+.serving--omakase.is-apart .omk__step:nth-child(2),
+.serving--omakase.is-annotated .omk__step:nth-child(3) {
+  opacity: 1;
+  transform: none;
+  transition: opacity .6s ease .25s, transform .6s ease .25s;
+}
+.serving--omakase.is-apart .omk__step:nth-child(2),
+.serving--omakase.is-annotated .omk__step:nth-child(3) { transition-delay: .75s; }
+
+.page .omk__quote { left: calc(var(--u) * 6); right: calc(var(--u) * 6); text-wrap: balance; }
+
+/* al cerrar, el recorrido se deshace más rápido */
+.serving--omakase.is-closing .omk__travel { transition-duration: .6s; }
+.serving--omakase.is-closing .omk__run { transition-duration: .5s; }
+.serving--omakase.is-closing .omk__ghost { transition: opacity .3s ease; }

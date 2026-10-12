@@ -186,7 +186,6 @@
                 <img class="serving__layer" data-layer="arroz" data-src="assets/products/nigiri-arroz.png" alt="">
                 <img class="serving__layer" data-layer="union" data-src="assets/products/nigiri-union.png" alt="">
                 <img class="serving__layer" data-layer="pescado" data-src="assets/products/nigiri-pescado.png" alt="">
-                <img class="serving__layer" data-layer="particulas" data-src="assets/products/nigiri-particulas.png" data-optional alt="">
               </div>
               <svg class="serving__guides" viewBox="0 0 618 500" aria-hidden="true" focusable="false">
                 <g><path d="M170 100 L372 100" pathLength="1"/><circle cx="170" cy="100" r="4"/></g>
@@ -230,6 +229,29 @@
                 <div class="wsb__beat" style="--x: 46; --y: 32"><dt>Impacto</dt><dd>Generar algo que sorprenda.</dd></div>
               </dl>
               <p class="serving__quote hand wsb__quote">“Me gusta partir desde algo reconocible y agregar ese giro que hace que una idea salga de lo esperado.”</p>
+            </section>
+
+            <!-- Servicio Omakase (etapa 4): idea → desarrollo → resolución.
+                 La pieza avanza sobre una línea de emplatado y crece; cada estado
+                 anterior queda como un borrador a lápiz. Al final, el sello del chef. -->
+            <section class="serving serving--omakase" id="serving-omakase" data-dish="omakase" data-open="750,1150" data-close="600,640,250" aria-label="Omakase — Llevar una idea más lejos" hidden>
+              <svg class="omk__line" viewBox="0 0 618 500" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+                <path class="omk__run omk__run--a" d="M14 313 L255 313" pathLength="1"/>
+                <path class="omk__run omk__run--b" d="M255 313 L604 313" pathLength="1"/>
+              </svg>
+              <img class="omk__ghost omk__ghost--a" src="assets/products/omakase.png" alt="" aria-hidden="true">
+              <img class="omk__ghost omk__ghost--b" src="assets/products/omakase.png" alt="" aria-hidden="true">
+              <div class="omk__travel" aria-hidden="true">
+                <span class="serving__ground"></span>
+                <img class="serving__whole" src="assets/products/omakase.png" alt="">
+              </div>
+              <span class="seal omk__seal" aria-hidden="true"></span>
+              <dl class="omk__steps">
+                <div class="omk__step" style="--x: 8;  --w: 14"><dt><span class="omk__tick"></span>Idea</dt><dd>Todo parte de una intuición.</dd></div>
+                <div class="omk__step" style="--x: 25.5; --w: 15"><dt><span class="omk__tick"></span>Desarrollo</dt><dd>Explorarla, enriquecerla y empujarla más.</dd></div>
+                <div class="omk__step" style="--x: 48; --w: 17"><dt><span class="omk__tick"></span>Resolución</dt><dd>Llevarla a su mejor versión.</dd></div>
+              </dl>
+              <p class="serving__quote hand omk__quote">“Cuando tengo una idea, intento llevarla lo más lejos posible.”</p>
             </section>
           </article>
           <span class="gutter gutter--left" aria-hidden="true"></span>
@@ -341,14 +363,6 @@
         </section>
       </div>
 
-      <!-- =========================================================
-           SERVICIO (etapas 2–4)
-           Contenedores reservados para Nigiri / Wasabi / Omakase.
-           Permanecen vacíos y ocultos en la etapa 1.
-           ========================================================= -->
-      <div class="servings" id="servings" hidden>
-        <section class="serving" id="serving-omakase" data-dish="omakase" aria-label="Omakase — Llevar una idea más lejos" hidden></section>
-      </div>
     </div>
 
     <!-- Sobre la mesa, fuera del objeto: indicaciones mínimas -->

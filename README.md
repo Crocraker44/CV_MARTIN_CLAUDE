@@ -7,7 +7,7 @@ Abrir `index.html` en el navegador (no requiere servidor ni compilación).
 
 ## Estado
 
-**Etapas 1 y 2 (Nigiri) — aprobadas. Etapa 3 (Wasabi) — en revisión.**
+**Etapas 1, 2 (Nigiri) y 3 (Wasabi) — aprobadas. Etapa 4 (Omakase) — en revisión.**
 Portada · apertura · doble página interior · Nigiri / Wasabi / Omakase en estado cerrado · contraportada.
 
 Las etapas 2–5 (interacciones de cada plato, pulido responsive y publicación) no están desarrolladas.
