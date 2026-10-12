@@ -1091,8 +1091,15 @@ abbr[title] { text-decoration: none; }
   object-fit: contain;
   filter: saturate(.9) drop-shadow(0 calc(var(--u) * .5) calc(var(--u) * .5) rgba(25, 23, 20, .2));
 }
-.serving__whole { transition: opacity .4s ease; }
-.serving__layer { opacity: 0; transition: opacity .4s ease, transform .85s cubic-bezier(.3, .6, .25, 1); }
+/* fundido breve: la foto entera se va justo cuando las capas ya empiezan a moverse */
+/* la foto entera queda encima: las capas aparecen opacas debajo y la foto
+   se retira mientras se separan (nunca dos piezas translúcidas a la vez) */
+.serving__whole { z-index: 2; transition: opacity .15s ease-out; }
+.serving__layer { z-index: 1; opacity: 0; transition: opacity 0s linear .17s, transform .9s cubic-bezier(.2, .65, .2, 1); }
+.serving.is-split .serving__whole { transition: opacity .1s cubic-bezier(.4, 0, 1, 1); }
+.serving.is-split .serving__layer { transition: opacity 0s, transform .9s cubic-bezier(.2, .65, .2, 1); }
+/* la unión es una capa fina y secundaria */
+.serving__layer[data-layer="union"] { transform-origin: 51% 53%; transform: scale(.58); filter: saturate(.85) drop-shadow(0 calc(var(--u) * .3) calc(var(--u) * .3) rgba(25, 23, 20, .16)); }
 .serving__ground {
   position: absolute;
   left: 24%;
@@ -1105,15 +1112,15 @@ abbr[title] { text-decoration: none; }
   transition: opacity .5s ease;
 }
 .serving.is-split .serving__ground { opacity: 1; }
-.serving.has-layers.is-apart .serving__ground { transform: translateY(calc(var(--u) * 13.2)); opacity: .8; }
+.serving.has-layers.is-apart .serving__ground { transform: translateY(calc(var(--u) * 13.8)); opacity: .8; }
 .serving__ground { transition: opacity .5s ease, transform .85s cubic-bezier(.3, .6, .25, 1); }
 
 /* capas: solo cuando existen los tres archivos */
 .serving.has-layers.is-split .serving__whole { opacity: 0; }
 .serving.has-layers.is-split .serving__layer.is-ready { opacity: 1; }
-.serving.is-apart .serving__layer[data-layer="pescado"]    { transform: translateY(calc(var(--u) * -10.8)); }
-.serving.is-apart .serving__layer[data-layer="union"]      { transform: translateY(calc(var(--u) * 1.2)); }
-.serving.is-apart .serving__layer[data-layer="arroz"]      { transform: translateY(calc(var(--u) * 12)); }
+.serving.is-apart .serving__layer[data-layer="pescado"]    { transform: translateY(calc(var(--u) * -7)); }
+.serving.is-apart .serving__layer[data-layer="union"]      { transform: translateY(calc(var(--u) * 3.6)) scale(.58); }
+.serving.is-apart .serving__layer[data-layer="arroz"]      { transform: translateY(calc(var(--u) * 12.6)); }
 .serving.is-apart .serving__layer[data-layer="particulas"] { transform: scale(1.08); }
 
 /* líneas guía, conceptos y frase: aparecen en orden al abrir, salen juntas al cerrar */

@@ -239,9 +239,10 @@
     s.serving.classList.remove("is-annotated");
     await wait(quick() ? 0 : 280);
     s.serving.classList.remove("is-apart");
-    if (s.serving.classList.contains("has-layers")) await wait(quick() ? 0 : 650);
+    // la foto entera vuelve mientras las capas terminan de juntarse
+    if (s.serving.classList.contains("has-layers")) await wait(quick() ? 0 : 420);
     s.serving.classList.remove("is-split");
-    if (s.serving.classList.contains("has-layers")) await wait(quick() ? 0 : 380);
+    if (s.serving.classList.contains("has-layers")) await wait(quick() ? 0 : 260);
     s.page.classList.remove("is-serving");
     await flight(s, true);
 
