@@ -7,7 +7,8 @@
 (() => {
   "use strict";
 
-  document.documentElement.classList.remove("no-js");
+  const root = document.documentElement;
+  root.classList.add("js");
 
   const scene = document.getElementById("scene");
   const book = document.getElementById("book");
@@ -34,6 +35,10 @@
   };
 
   let busy = false;
+  let busyUntil = 0;
+  let keyboardUser = false;
+  document.addEventListener("keydown", () => { keyboardUser = true; }, true);
+  document.addEventListener("pointerdown", () => { keyboardUser = false; }, true);
 
   function turnDuration() {
     const value = getComputedStyle(document.documentElement).getPropertyValue("--turn").trim();
@@ -63,21 +68,29 @@
 
   function run(action) {
     const t = transitions[action];
+    // el seguro de tiempo evita que un temporizador perdido deje la carta bloqueada
+    if (busy && Date.now() > busyUntil) settle();
     if (!t || busy || book.dataset.state !== t.from) return;
 
-    if (served) closeServing();
+    // la carta se cierra limpia: ningún servicio sigue animándose durante el giro
+    resetServing();
     busy = true;
+    busyUntil = Date.now() + turnDuration() + 1200;
     if (t.to === "open") book.dataset.side = action === "open-back" ? "right" : "left";
     book.dataset.motion = t.motion;
-
     setState(t.to);
 
-    window.setTimeout(() => {
-      delete book.dataset.motion;
-      busy = false;
-      if (t.to === "open") pageStart.focus({ preventScroll: true });
-      else (t.to === "closed" ? faces.cover : faces.back).querySelector(".face__hit").focus({ preventScroll: true });
-    }, turnDuration() + 60);
+    window.clearTimeout(run.timer);
+    run.timer = window.setTimeout(() => settle(t.to), turnDuration() + 60);
+  }
+
+  function settle(to) {
+    window.clearTimeout(run.timer);
+    if (book.dataset.motion !== "pan") delete book.dataset.motion;
+    busy = false;
+    if (!to || !keyboardUser) return;
+    if (to === "open") pageStart.focus({ preventScroll: true });
+    else (to === "closed" ? faces.cover : faces.back).querySelector(".face__hit").focus({ preventScroll: true });
   }
 
   /* ---------------------------------------------------------------
@@ -97,7 +110,7 @@
   // tocar el borde visible de la otra página la trae al frente
   [["left", faces.left], ["right", faces.right]].forEach(([side, face]) => {
     face.addEventListener("click", (event) => {
-      if (!singlePage.matches || book.dataset.side === side) return;
+      if (!singlePage.matches || book.dataset.state !== "open" || book.dataset.side === side) return;
       event.preventDefault();
       event.stopPropagation();
       showSide(side);
@@ -282,6 +295,20 @@
     s.serving.classList.add("is-annotated");
   }
 
+  // cierre instantáneo (al girar la carta): vuelve todo al estado de carga
+  function resetServing() {
+    document.querySelectorAll(".page .serving").forEach((el) => {
+      nextTurn(el);
+      el.classList.remove("is-split", "is-apart", "is-further", "is-annotated", "is-closing");
+      el.querySelector(".serving__whole")?.getAnimations().forEach((a) => a.cancel());
+      el.hidden = true;
+    });
+    document.querySelectorAll(".dish.is-served").forEach((el) => el.classList.remove("is-served"));
+    document.querySelectorAll(".page.is-serving").forEach((el) => el.classList.remove("is-serving"));
+    document.querySelectorAll(".dish__hotspot[aria-expanded='true']").forEach((el) => el.setAttribute("aria-expanded", "false"));
+    served = null;
+  }
+
   async function closeServing(s = served, handoff = false) {
     if (!s) return;
     if (served === s) served = null;
@@ -385,4 +412,6 @@
 
   setState(book.dataset.state || "closed");
   syncNav();
+  // fin del arranque: a partir del segundo frame ya se puede animar
+  requestAnimationFrame(() => requestAnimationFrame(() => root.classList.remove("is-booting")));
 })();

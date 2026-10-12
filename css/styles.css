@@ -1053,10 +1053,12 @@ abbr[title] { text-decoration: none; }
 
 .serving[hidden] { display: none; }
 
-/* ---------- 9. Sin JavaScript: la carta se muestra abierta ---------- */
+/* ---------- 9. Primer frame ----------
+   Mientras arranca no se anima nada: la portada aparece ya en su sitio. */
 
-.no-js .book { --shift: 0px; }
-.no-js .board--front { transform: none; }
+.is-booting *,
+.is-booting *::before,
+.is-booting *::after { transition: none !important; animation: none !important; }
 
 /* ---------- 10. Servicio Nigiri (etapa 2) ----------
    Todo ocurre dentro del papel de la página izquierda: el texto de la
@@ -1640,3 +1642,31 @@ abbr[title] { text-decoration: none; }
 /* navegación sobre la mesa: zona táctil cómoda sin cambiar su aspecto */
 .table-nav__link { min-height: 44px; padding: .9rem .5rem; }
 .table-nav { bottom: max(0rem, env(safe-area-inset-bottom)); }
+
+/* ---------- 15. Caras visibles (no depender de backface-visibility) ----------
+   WebKit en iPhone puede pintar y recibir toques en capas compuestas de una
+   cara que está de espaldas (fotos con filtro u opacidad animada). Por eso
+   cada cara se oculta de verdad cuando no mira al lector, y durante el giro
+   cambia de visible a oculta justo cuando la tapa pasa los 90° (≈43 % del
+   tiempo con la curva del giro). */
+
+.book .face { visibility: hidden; }
+.book[data-state="closed"] .face--cover,
+.book[data-state="open"] .face--left,
+.book[data-state="open"] .face--right,
+.book[data-state="back"] .face--backcover,
+.book[data-motion="close-front"] .face--right,
+.book[data-motion="close-back"] .face--left { visibility: visible; }
+
+@keyframes face-depart { 0%, 42.8% { visibility: visible; } 43%, 100% { visibility: hidden; } }
+@keyframes face-arrive { 0%, 42.8% { visibility: hidden; } 43%, 100% { visibility: visible; } }
+
+.book[data-motion="open-front"]  .face--cover,
+.book[data-motion="close-front"] .face--left,
+.book[data-motion="close-back"]  .face--right,
+.book[data-motion="open-back"]   .face--backcover { animation: face-depart var(--turn) linear both; }
+
+.book[data-motion="open-front"]  .face--left,
+.book[data-motion="close-front"] .face--cover,
+.book[data-motion="close-back"]  .face--backcover,
+.book[data-motion="open-back"]   .face--right { animation: face-arrive var(--turn) linear both; }
