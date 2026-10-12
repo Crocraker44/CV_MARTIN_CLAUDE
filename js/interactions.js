@@ -66,6 +66,7 @@
     const t = transitions[action];
     if (!t || busy || book.dataset.state !== t.from) return;
 
+    if (served) closeServing();
     busy = true;
     if (t.to === "open") book.dataset.side = action === "open-back" ? "right" : "left";
     book.dataset.motion = t.motion;
@@ -86,6 +87,7 @@
 
   function showSide(side) {
     if (book.dataset.state !== "open" || book.dataset.side === side || busy) return;
+    if (served) closeServing();
     book.dataset.motion = "pan";
     book.dataset.side = side;
     window.setTimeout(() => {
@@ -136,6 +138,13 @@
     if (event.altKey || event.ctrlKey || event.metaKey) return;
     const state = book.dataset.state;
 
+    if (served && (event.key === "Escape" || event.key.startsWith("Arrow"))) {
+      const hotspot = served.hotspot;
+      closeServing();
+      if (event.key === "Escape") hotspot.focus({ preventScroll: true });
+      return;
+    }
+
     if (event.key === "ArrowRight") {
       if (state === "closed") run("open");
       else if (state === "open" && singlePage.matches && book.dataset.side === "left") showSide("right");
@@ -150,14 +159,109 @@
   /* ---------------------------------------------------------------
      Platos (etapas 2–4)
      Arquitectura lista: cada hotspot conoce su plato y su rasgo.
-     En esta etapa no abre nada; solo anuncia la intención.
+     Nigiri abre su servicio (etapa 2); Wasabi y Omakase aún no.
      --------------------------------------------------------------- */
 
-  document.querySelectorAll(".dish__hotspot").forEach((hotspot) => {
-    hotspot.addEventListener("click", () => {
+  /* Solo existe un servicio abierto a la vez. Un plato tiene interacción
+     si su <section class="serving"> vive dentro de una página
+     (por ahora solo Nigiri; Wasabi y Omakase siguen reservados). */
+
+  const wait = (ms) => new Promise((resolve) => window.setTimeout(resolve, ms));
+  const frame = () => new Promise((resolve) => requestAnimationFrame(() => resolve()));
+  const quick = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  let served = null;   // { dish, serving, hotspot, item, page }
+  let serveToken = 0;
+
+  function servingFor(dish) {
+    const serving = document.querySelector(`.page .serving[data-dish="${dish}"]`);
+    if (!serving) return null;
+    return {
+      dish,
+      serving,
+      hotspot: document.querySelector(`.dish__hotspot[data-dish="${dish}"]`),
+      item: document.querySelector(`.dish[data-dish="${dish}"]`),
+      page: serving.closest(".page"),
+    };
+  }
+
+  // la pieza entera viaja desde su lugar en la carta hasta el escenario
+  function flight(s, reverse) {
+    const whole = s.serving.querySelector(".serving__whole");
+    const from = s.item.querySelector(".dish__photo").getBoundingClientRect();
+    const to = whole.getBoundingClientRect();
+    if (!to.width) return Promise.resolve();
+    const k = from.width / to.width;
+    const dx = from.left + from.width / 2 - (to.left + to.width / 2);
+    const dy = from.top + from.height / 2 - (to.top + to.height / 2);
+    const away = { transform: `translate(${dx}px, ${dy}px) scale(${k})` };
+    const home = { transform: "translate(0, 0) scale(1)" };
+    whole.getAnimations().forEach((a) => a.cancel());
+    const anim = whole.animate(reverse ? [home, away] : [away, home], {
+      duration: quick() ? 1 : 750,
+      easing: "cubic-bezier(.3, .6, .25, 1)",
+      fill: reverse ? "forwards" : "none",
+    });
+    return anim.finished.catch(() => {});
+  }
+
+  async function openServing(dish) {
+    const s = servingFor(dish);
+    if (!s || book.dataset.state !== "open") return;
+    if (served) await closeServing();
+
+    const token = ++serveToken;
+    served = s;
+    s.serving.hidden = false;
+    s.page.classList.add("is-serving");
+    s.item.classList.add("is-served");
+    s.hotspot.setAttribute("aria-expanded", "true");
+
+    await frame();
+    await flight(s, false);
+    if (token !== serveToken) return;
+
+    s.serving.classList.add("is-split");
+    await frame();
+    s.serving.classList.add("is-apart");
+    if (s.serving.classList.contains("has-layers")) await wait(quick() ? 0 : 650);
+    if (token !== serveToken) return;
+    s.serving.classList.add("is-annotated");
+  }
+
+  async function closeServing() {
+    const s = served;
+    if (!s) return;
+    const token = ++serveToken;
+    served = null;
+    s.hotspot.setAttribute("aria-expanded", "false");
+
+    s.serving.classList.remove("is-annotated");
+    await wait(quick() ? 0 : 280);
+    s.serving.classList.remove("is-apart");
+    if (s.serving.classList.contains("has-layers")) await wait(quick() ? 0 : 650);
+    s.serving.classList.remove("is-split");
+    s.page.classList.remove("is-serving");
+    await flight(s, true);
+
+    if (token !== serveToken) return;
+    s.item.classList.remove("is-served");
+    s.serving.hidden = true;
+    s.serving.querySelector(".serving__whole").getAnimations().forEach((a) => a.cancel());
+  }
+
+  document.addEventListener("click", (event) => {
+    const hotspot = event.target.closest(".dish__hotspot");
+    if (hotspot) {
       const dish = hotspot.dataset.dish;
       book.dispatchEvent(new CustomEvent("carta:dish", { bubbles: true, detail: { dish } }));
-    });
+      if (served && served.dish === dish) closeServing();
+      else if (servingFor(dish)) openServing(dish);
+      else closeServing();
+      return;
+    }
+    // clic fuera del área activa
+    if (served && !event.target.closest(".serving")) closeServing();
   });
 
   /* ---------------------------------------------------------------
@@ -183,6 +287,20 @@
       img.classList.add("is-loaded");
       img.closest(".dish")?.classList.add("has-photo");
     }
+  });
+
+  // capas de cada servicio: se activan solas cuando existen los archivos requeridos
+  document.querySelectorAll(".serving").forEach(async (serving) => {
+    const layers = [...serving.querySelectorAll(".serving__layer[data-src]")];
+    const found = await Promise.all(layers.map(async (img) => {
+      if (!(await probe(img.dataset.src))) return false;
+      img.src = img.dataset.src;
+      await img.decode?.().catch(() => {});
+      img.classList.add("is-ready");
+      return true;
+    }));
+    const required = layers.every((img, i) => found[i] || img.hasAttribute("data-optional"));
+    serving.classList.toggle("has-layers", layers.length > 0 && required);
   });
 
   document.querySelectorAll(".decor[data-asset]").forEach(async (el) => {

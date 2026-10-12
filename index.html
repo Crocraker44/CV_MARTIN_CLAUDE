@@ -176,6 +176,30 @@
             <span class="seal page__seal" aria-hidden="true"></span>
             <div class="decor page__mountains" data-asset="assets/decor/montanas-sumi.png" aria-hidden="true"></div>
 
+            <!-- Servicio Nigiri (etapa 2): ocurre dentro del papel de esta página.
+                 Las capas se usan solas cuando existen sus archivos; si no, la
+                 pieza entera sube y se anota sin descomponerse. -->
+            <section class="serving serving--nigiri" id="serving-nigiri" data-dish="nigiri" aria-label="Nigiri — Prolijidad" hidden>
+              <div class="serving__stack" aria-hidden="true">
+                <span class="serving__ground"></span>
+                <img class="serving__whole" src="assets/products/nigiri.png" alt="">
+                <img class="serving__layer" data-layer="arroz" data-src="assets/products/nigiri-arroz.png" alt="">
+                <img class="serving__layer" data-layer="union" data-src="assets/products/nigiri-union.png" alt="">
+                <img class="serving__layer" data-layer="pescado" data-src="assets/products/nigiri-pescado.png" alt="">
+                <img class="serving__layer" data-layer="particulas" data-src="assets/products/nigiri-particulas.png" data-optional alt="">
+              </div>
+              <svg class="serving__guides" viewBox="0 0 618 500" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+                <path d="M232 92 L280 92 L372 92" pathLength="1"/>
+                <path d="M205 205 L262 205 L372 205" pathLength="1"/>
+                <path d="M196 318 L280 318 L372 318" pathLength="1"/>
+              </svg>
+              <dl class="serving__notes">
+                <div class="serving__note" style="--y: 9.2"><dt>Detalle</dt><dd>Cuidar lo pequeño.</dd></div>
+                <div class="serving__note" style="--y: 20.5"><dt>Coherencia</dt><dd>Cada elemento responde al concepto.</dd></div>
+                <div class="serving__note" style="--y: 31.8"><dt>Estructura</dt><dd>Una buena base sostiene una buena idea.</dd></div>
+              </dl>
+              <p class="serving__quote hand">“Me gusta perfeccionar las ideas creativas y cuidar que cada elemento tenga sentido dentro del concepto.”</p>
+            </section>
           </article>
           <span class="gutter gutter--left" aria-hidden="true"></span>
         </section>
@@ -292,7 +316,6 @@
            Permanecen vacíos y ocultos en la etapa 1.
            ========================================================= -->
       <div class="servings" id="servings" hidden>
-        <section class="serving" id="serving-nigiri" data-dish="nigiri" aria-label="Nigiri — Prolijidad" hidden></section>
         <section class="serving" id="serving-wasabi" data-dish="wasabi" aria-label="Wasabi — Atrevimiento" hidden></section>
         <section class="serving" id="serving-omakase" data-dish="omakase" aria-label="Omakase — Llevar una idea más lejos" hidden></section>
       </div>
