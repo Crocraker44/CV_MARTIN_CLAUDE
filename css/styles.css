@@ -315,11 +315,11 @@ abbr[title] { text-decoration: none; }
   background: radial-gradient(circle, var(--red) 35%, var(--red-shade) 70%, rgba(0,0,0,.6));
 }
 
-/* sello (asset: assets/brand/sello-mah.png) */
+/* sello (asset: assets/brand/sello-mah.webp) */
 .seal {
   display: block;
   aspect-ratio: 661 / 649;
-  background: url("../assets/brand/sello-mah.png") no-repeat center / contain;
+  background: url("../assets/brand/sello-mah.webp") no-repeat center / contain;
   pointer-events: none;
 }
 
@@ -1489,3 +1489,154 @@ abbr[title] { text-decoration: none; }
 .serving--omakase.is-closing .omk__travel { transition-duration: .6s; }
 .serving--omakase.is-closing .omk__run { transition-duration: .5s; }
 .serving--omakase.is-closing .omk__ghost { transition: opacity .3s ease; }
+
+/* ---------- 13. Refinamiento tipográfico y papel (etapa final) ----------
+   Interior: EB Garamond para el texto y los rótulos en versales espaciadas,
+   Cormorant Garamond para los titulares y las frases en cursiva roja.
+   Portada y contraportada conservan su tipografía. */
+
+:root {
+  --f-text: "EB Garamond", "Cormorant Garamond", Garamond, "Times New Roman", serif;
+  --tex-seigaiha-left: url("../assets/decor/seigaiha-izquierda.svg");
+  --tex-seigaiha-right: url("../assets/decor/seigaiha-derecha.svg");
+}
+
+/* papel: olas seigaiha muy tenues, integradas en la fibra */
+.paper::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--tex-seigaiha-left) no-repeat center / cover;
+  opacity: .24;
+  mix-blend-mode: multiply;
+}
+.page--right .paper::before { background-image: var(--tex-seigaiha-right); }
+
+/* cuerpo */
+.page p,
+.page li,
+.page dt,
+.page dd,
+.page address {
+  font-family: var(--f-text);
+  font-weight: 400;
+  font-size: calc(var(--u) * 1.82);
+  line-height: 1.42;
+}
+
+/* rótulos: versales espaciadas con filete que se prolonga */
+.kicker {
+  font-family: var(--f-text);
+  font-weight: 500;
+  font-size: calc(var(--u) * 1.22);
+  letter-spacing: .42em;
+}
+.heading:not(.heading--lead),
+.label {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--u) * 1.4);
+  font-family: var(--f-text);
+  font-weight: 500;
+  font-size: calc(var(--u) * 1.34);
+  line-height: 1.2;
+  letter-spacing: .34em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.heading:not(.heading--lead)::after,
+.label::after {
+  content: "";
+  flex: 1;
+  height: 0;
+  border-top: 1px solid var(--hairline);
+}
+.label { font-size: calc(var(--u) * 1.14); letter-spacing: .3em; }
+.block--about,
+.block--chef { border-top: 0; }
+.block--about .heading,
+.block--traits .heading { margin-bottom: calc(var(--u) * 1.2); }
+/* el texto nuevo ocupa menos alto: el aire se reparte entre bloques */
+.masthead__brush { margin-top: calc(var(--u) * 1.6); }
+.block--about { margin-top: calc(var(--u) * 2.6); }
+.block--traits { margin-top: calc(var(--u) * 3.6); }
+.block--chef { margin-top: calc(var(--u) * 3.6); }
+.block--chef .block__lead { margin-top: calc(var(--u) * .6); }
+.dishes { margin-top: calc(var(--u) * 2.4); }
+.block--tools .heading,
+.block--interests .heading { font-size: calc(var(--u) * 1.34); margin-bottom: calc(var(--u) * 1); }
+
+/* titulares con más carácter */
+.masthead__name {
+  font-weight: 600;
+  letter-spacing: -.014em;
+}
+.heading--lead {
+  font-family: var(--f-serif);
+  font-weight: 600;
+  font-size: calc(var(--u) * 4.6);
+  letter-spacing: -.01em;
+}
+.page .masthead__role {
+  font-family: var(--f-text);
+  font-weight: 500;
+  font-size: calc(var(--u) * 1.18);
+  letter-spacing: .3em;
+  text-transform: uppercase;
+}
+.page .trait { font-family: var(--f-text); font-size: calc(var(--u) * 1.95); }
+.page .offer li { font-size: calc(var(--u) * 1.82); }
+.page .ledger__lead { font-family: var(--f-text); font-weight: 600; }
+
+/* frases destacadas: cursiva roja, sin inclinación de rotulador */
+.page .hand.quote,
+.page .serving__quote.hand {
+  font-family: var(--f-serif);
+  font-style: italic;
+  font-weight: 500;
+  color: var(--red);
+  letter-spacing: .005em;
+}
+.page .quote--traits {
+  font-size: calc(var(--u) * 2.9);
+  line-height: 1.22;
+  transform: none;
+  margin-top: calc(var(--u) * 1.3);
+}
+.page .quote--interests {
+  font-size: calc(var(--u) * 2.4);
+  transform: none;
+}
+.page .serving__quote.hand { font-size: calc(var(--u) * 2.5); line-height: 1.25; bottom: calc(var(--u) * 1.4); }
+.page .serving.is-annotated .serving__quote { transform: none; }
+
+/* platos: nombre en versal-negrita y significado en rojo recto */
+.dish__name { font-family: var(--f-text); font-weight: 600; font-size: calc(var(--u) * 1.9); }
+.dish__meaning.hand {
+  font-family: var(--f-text);
+  font-weight: 400;
+  font-size: calc(var(--u) * 1.78);
+  color: var(--red);
+}
+
+/* conceptos de los servicios: mismas versales del interior */
+.serving__note dt,
+.wsb__beat dt,
+.omk__step dt { font-family: var(--f-text); font-weight: 500; }
+.serving__note dt,
+.wsb__beat dt { font-size: calc(var(--u) * 1.2); letter-spacing: .3em; }
+.page .omk__step dt { font-size: calc(var(--u) * 1.08); line-height: 1.5; }
+
+/* ---------- 14. Robustez táctil ----------
+   Solo la cara visible recibe toques, aunque el navegador no soporte
+   «inert» o ignore backface-visibility al decidir qué se tocó (WebKit):
+   así la página interior, girada de espaldas, no puede tapar la portada. */
+.book[data-state="closed"] .face:not(.face--cover),
+.book[data-state="open"] .face--cover,
+.book[data-state="open"] .face--backcover,
+.book[data-state="back"] .face:not(.face--backcover) { pointer-events: none; }
+
+/* navegación sobre la mesa: zona táctil cómoda sin cambiar su aspecto */
+.table-nav__link { min-height: 44px; padding: .9rem .5rem; }
+.table-nav { bottom: max(0rem, env(safe-area-inset-bottom)); }

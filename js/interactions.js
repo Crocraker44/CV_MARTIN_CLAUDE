@@ -108,26 +108,47 @@
     });
   });
 
-  // deslizar horizontalmente
+  // deslizar horizontalmente (pantallas verticales).
+  // Se escuchan eventos touch y no pointer: en un teléfono real el navegador
+  // cancela el puntero (pointercancel) en cuanto el dedo se desplaza, y el
+  // gesto nunca llegaba a pasar de página.
+  const zoomed = () => (window.visualViewport ? window.visualViewport.scale > 1.02 : false);
   let swipe = null;
-  // un segundo dedo (zoom con pellizco) anula el deslizamiento
-  let fingers = 0;
-  scene.addEventListener("pointerdown", (event) => {
-    if (event.pointerType !== "mouse") fingers += 1;
-    if (fingers > 1) { swipe = null; return; }
-    if (!singlePage.matches || book.dataset.state !== "open" || event.pointerType === "mouse") return;
-    swipe = { x: event.clientX, y: event.clientY };
-  });
-  scene.addEventListener("pointerup", (event) => {
-    if (event.pointerType !== "mouse") fingers = Math.max(0, fingers - 1);
-    if (!swipe) return;
-    const dx = event.clientX - swipe.x;
-    const dy = event.clientY - swipe.y;
+  scene.addEventListener("touchstart", (event) => {
+    // con dos dedos (pellizco) o con zoom activo, el gesto es del navegador
+    if (event.touches.length !== 1 || zoomed() || !singlePage.matches || book.dataset.state !== "open") {
+      swipe = null;
+      return;
+    }
+    const t = event.touches[0];
+    swipe = { x: t.clientX, y: t.clientY, at: Date.now() };
+  }, { passive: true });
+  scene.addEventListener("touchend", (event) => {
+    if (!swipe || event.touches.length > 0) { if (event.touches.length === 0) swipe = null; return; }
+    const t = event.changedTouches[0];
+    const dx = t.clientX - swipe.x;
+    const dy = t.clientY - swipe.y;
+    const slow = Date.now() - swipe.at > 900;
     swipe = null;
-    if (Math.abs(dx) < 44 || Math.abs(dx) < Math.abs(dy) * 1.4) return;
+    if (zoomed() || slow || Math.abs(dx) < 44 || Math.abs(dx) < Math.abs(dy) * 1.4) return;
     showSide(dx < 0 ? "right" : "left");
-  });
-  scene.addEventListener("pointercancel", () => { swipe = null; fingers = 0; });
+  }, { passive: true });
+  scene.addEventListener("touchcancel", () => { swipe = null; }, { passive: true });
+
+  /* Navegación sobre la mesa: en pantallas verticales avanza página a página
+     (portada ← página izquierda ↔ página derecha → contraportada). */
+  const navFront = document.querySelector(".table-nav__link--front");
+  const navBack = document.querySelector(".table-nav__link--back");
+  function syncNav() {
+    const paged = singlePage.matches && book.dataset.state === "open";
+    const onLeft = book.dataset.side !== "right";
+    navFront.dataset.action = paged && !onLeft ? "side-left" : "close-front";
+    navBack.dataset.action = paged && onLeft ? "side-right" : "close-back";
+    navFront.textContent = navFront.dataset.action === "side-left" ? "Página" : "Portada";
+    navBack.textContent = navBack.dataset.action === "side-right" ? "Página" : "Contraportada";
+  }
+  new MutationObserver(syncNav).observe(book, { attributes: true, attributeFilter: ["data-state", "data-side"] });
+  singlePage.addEventListener?.("change", syncNav);
 
   /* ---------------------------------------------------------------
      Gestos y teclado
@@ -135,7 +156,10 @@
 
   document.addEventListener("click", (event) => {
     const trigger = event.target.closest("[data-action]");
-    if (trigger) run(trigger.dataset.action);
+    if (!trigger) return;
+    const action = trigger.dataset.action;
+    if (action.startsWith("side-")) showSide(action.slice(5));
+    else run(action);
   });
 
   document.addEventListener("keydown", (event) => {
@@ -174,8 +198,13 @@
   const frame = () => new Promise((resolve) => requestAnimationFrame(() => resolve()));
   const quick = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  let served = null;   // { dish, serving, hotspot, item, page }
-  let serveToken = 0;
+  let served = null;   // { dish, serving, hotspot, item, page } — el plato abierto o abriéndose
+
+  // cada servicio lleva su propio turno: abrir de nuevo un plato que se está
+  // cerrando (o al revés) anula la secuencia anterior sin dejarla a medias
+  const turns = new WeakMap();
+  const nextTurn = (el) => { const n = (turns.get(el) || 0) + 1; turns.set(el, n); return n; };
+  const current = (el, n) => turns.get(el) === n;
 
   function servingFor(dish) {
     const serving = document.querySelector(`.page .serving[data-dish="${dish}"]`);
@@ -218,63 +247,68 @@
 
   async function openServing(dish) {
     const s = servingFor(dish);
-    if (!s || book.dataset.state !== "open") return;
-    // relevo en la misma página: el texto no reaparece entre un plato y otro
-    if (served) await closeServing(served.page === s.page);
-
-    const token = ++serveToken;
+    if (!s || book.dataset.state !== "open" || served?.serving === s.serving) return;
+    const prev = served;
     served = s;
+    const turn = nextTurn(s.serving);
+    s.hotspot.setAttribute("aria-expanded", "true");
+    // relevo en la misma página: el texto no reaparece entre un plato y otro
+    if (prev) await closeServing(prev, prev.page === s.page);
+    if (!current(s.serving, turn)) return;
+
+    s.serving.classList.remove("is-closing");
     s.serving.hidden = false;
     s.page.classList.add("is-serving");
     s.item.classList.add("is-served");
-    s.hotspot.setAttribute("aria-expanded", "true");
 
     await frame();
     await flight(s, false);
-    if (token !== serveToken) return;
+    if (!current(s.serving, turn)) return;
 
     const layered = s.serving.classList.contains("has-layers");
     s.serving.classList.add("is-split");
     await frame();
     await wait(beat(s, "open", 0, 0));
-    if (token !== serveToken) return;
+    if (!current(s.serving, turn)) return;
     s.serving.classList.add("is-apart");
     await wait(beat(s, "open", 1, layered ? 750 : 0));
-    if (token !== serveToken) return;
+    if (!current(s.serving, turn)) return;
     // estación intermedia opcional (data-further="espera al abrir,espera al cerrar")
     if (s.serving.dataset.further) {
       s.serving.classList.add("is-further");
       await wait(beat(s, "further", 0, 0));
-      if (token !== serveToken) return;
+      if (!current(s.serving, turn)) return;
     }
     s.serving.classList.add("is-annotated");
   }
 
-  async function closeServing(handoff = false) {
-    const s = served;
+  async function closeServing(s = served, handoff = false) {
     if (!s) return;
-    const token = ++serveToken;
-    served = null;
+    if (served === s) served = null;
+    const turn = nextTurn(s.serving);
     s.hotspot.setAttribute("aria-expanded", "false");
+    // nunca llegó a mostrarse (relevo anulado): basta con devolver el plato
+    if (s.serving.hidden) { s.item.classList.remove("is-served"); return; }
 
     const layered = s.serving.classList.contains("has-layers");
+    const steps = [
+      () => s.serving.classList.remove("is-annotated"), beat(s, "close", 0, 280),
+      () => s.serving.classList.remove("is-further"), s.serving.classList.contains("is-further") ? beat(s, "further", 1, 0) : 0,
+      // la foto entera vuelve mientras las capas terminan de juntarse
+      () => s.serving.classList.remove("is-apart"), beat(s, "close", 1, layered ? 420 : 0),
+      () => s.serving.classList.remove("is-split"), beat(s, "close", 2, layered ? 260 : 0),
+    ];
     s.serving.classList.add("is-closing");
-    s.serving.classList.remove("is-annotated");
-    await wait(beat(s, "close", 0, 280));
-    if (s.serving.classList.contains("is-further")) {
-      s.serving.classList.remove("is-further");
-      await wait(beat(s, "further", 1, 0));
+    for (let k = 0; k < steps.length; k += 2) {
+      steps[k]();
+      await wait(steps[k + 1]);
+      if (!current(s.serving, turn)) return;   // se volvió a abrir: manda la apertura
     }
-    s.serving.classList.remove("is-apart");
-    // la foto entera vuelve mientras las capas terminan de juntarse
-    await wait(beat(s, "close", 1, layered ? 420 : 0));
-    s.serving.classList.remove("is-split");
-    await wait(beat(s, "close", 2, layered ? 260 : 0));
-    if (!handoff) s.page.classList.remove("is-serving");
+    if (!handoff && served?.page !== s.page) s.page.classList.remove("is-serving");
     await flight(s, true);
+    if (!current(s.serving, turn)) return;
 
     s.serving.classList.remove("is-closing");
-    if (token !== serveToken) return;
     s.item.classList.remove("is-served");
     s.serving.hidden = true;
     s.serving.querySelector(".serving__whole").getAnimations().forEach((a) => a.cancel());
@@ -350,4 +384,5 @@
      --------------------------------------------------------------- */
 
   setState(book.dataset.state || "closed");
+  syncNav();
 })();
