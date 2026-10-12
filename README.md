@@ -7,7 +7,7 @@ Abrir `index.html` en el navegador (no requiere servidor ni compilación).
 
 ## Estado
 
-**Etapa 1 — terminada con assets integrados, pendiente de revisión.**
+**Etapa 1 — aprobada. Etapa 2 (Nigiri) — en revisión.**
 Portada · apertura · doble página interior · Nigiri / Wasabi / Omakase en estado cerrado · contraportada.
 
 Las etapas 2–5 (interacciones de cada plato, pulido responsive y publicación) no están desarrolladas.
@@ -43,3 +43,6 @@ references/                referencias visuales maestras
 | `assets/products/nigiri.png`       | Selección del chef — Nigiri                                  |
 | `assets/products/wasabi.png`       | Selección del chef — Wasabi                                  |
 | `assets/products/omakase.png`      | Selección del chef — Omakase                                 |
+| `assets/products/nigiri-pescado.png` | Servicio Nigiri — capa pescado                             |
+| `assets/products/nigiri-union.png`   | Servicio Nigiri — capa unión                               |
+| `assets/products/nigiri-arroz.png`   | Servicio Nigiri — capa arroz                               |

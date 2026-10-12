@@ -224,7 +224,7 @@
     s.serving.classList.add("is-split");
     await frame();
     s.serving.classList.add("is-apart");
-    if (s.serving.classList.contains("has-layers")) await wait(quick() ? 0 : 650);
+    if (s.serving.classList.contains("has-layers")) await wait(quick() ? 0 : 750);
     if (token !== serveToken) return;
     s.serving.classList.add("is-annotated");
   }
@@ -241,6 +241,7 @@
     s.serving.classList.remove("is-apart");
     if (s.serving.classList.contains("has-layers")) await wait(quick() ? 0 : 650);
     s.serving.classList.remove("is-split");
+    if (s.serving.classList.contains("has-layers")) await wait(quick() ? 0 : 380);
     s.page.classList.remove("is-serving");
     await flight(s, true);
 
