@@ -7,10 +7,8 @@ Abrir `index.html` en el navegador (no requiere servidor ni compilación).
 
 ## Estado
 
-**Etapas 1, 2 (Nigiri) y 3 (Wasabi) — aprobadas. Etapa 4 (Omakase) — en revisión.**
-Portada · apertura · doble página interior · Nigiri / Wasabi / Omakase en estado cerrado · contraportada.
-
-Las etapas 2–5 (interacciones de cada plato, pulido responsive y publicación) no están desarrolladas.
+**Etapas 1–4 aprobadas. Etapa 5 (pulido final + QA) — en revisión.** Sin publicar.
+Portada · apertura · doble página interior · servicios Nigiri / Wasabi / Omakase · contraportada.
 
 ## Estructura
 
@@ -30,7 +28,8 @@ references/                referencias visuales maestras
 - Clic / toque / Enter sobre la portada: abre la carta.
 - Sobre la mesa, bajo la carta abierta: «Portada» y «Contraportada».
 - Teclado: ← / →.
-- Pantallas verticales: se ve una página a la vez; tocar el borde de la otra página o deslizar.
+- Platos: clic/tap abre su servicio; segundo clic, ESC o clic fuera lo cierran. Uno a la vez.
+- Pantallas verticales: se ve una página a la vez; tocar el borde de la otra página o deslizar. El zoom con pellizco del navegador sigue disponible para leer de cerca.
 
 ## Assets
 

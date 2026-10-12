@@ -72,10 +72,12 @@ html, body { height: 100%; }
 body {
   margin: 0;
   background-color: var(--table);
+  /* la mesa: grano apagado para que no compita con la carta */
   background-image:
     radial-gradient(ellipse 70% 62% at 50% 46%, color-mix(in srgb, var(--paper) 3.5%, transparent), transparent 72%),
+    linear-gradient(color-mix(in srgb, var(--carbon) 45%, transparent), color-mix(in srgb, var(--carbon) 45%, transparent)),
     var(--tex-board);
-  background-size: 100% 100%, 220px 220px;
+  background-size: 100% 100%, 100% 100%, 220px 220px;
   color: var(--ink);
   font-family: var(--f-serif);
   -webkit-font-smoothing: antialiased;
@@ -736,6 +738,10 @@ abbr[title] { text-decoration: none; }
 }
 .dish__hotspot:focus { outline: none; }
 .dish__hotspot:focus-visible .dish__name { text-decoration: underline 1px var(--red); text-underline-offset: .2em; }
+@media (hover: hover) { /* acento rojo mínimo al pasar */
+  .dish__hotspot .dish__name { text-decoration: underline 1px transparent; text-underline-offset: .2em; transition: text-decoration-color .35s ease; }
+  .dish__hotspot:hover .dish__name { text-decoration-color: color-mix(in srgb, var(--red) 55%, transparent); }
+}
 
 .dish__plate {
   position: relative;
@@ -990,10 +996,10 @@ abbr[title] { text-decoration: none; }
   right: 0;
   bottom: 0;
   font-family: var(--f-mincho);
-  font-size: .64rem;
+  font-size: .7rem;
   letter-spacing: .38em;
   text-transform: uppercase;
-  color: color-mix(in srgb, var(--paper) 34%, transparent);
+  color: color-mix(in srgb, var(--paper) 56%, transparent);
   opacity: 0;
   transition: opacity .8s ease;
 }
@@ -1022,7 +1028,7 @@ abbr[title] { text-decoration: none; }
   font-size: .64rem;
   letter-spacing: .34em;
   text-transform: uppercase;
-  color: color-mix(in srgb, var(--paper) 34%, transparent);
+  color: color-mix(in srgb, var(--paper) 48%, transparent);
   cursor: pointer;
   opacity: 0;
   visibility: hidden;
@@ -1045,7 +1051,7 @@ abbr[title] { text-decoration: none; }
 
 /* ---------- 8. Servicio (etapas 2–4, reservado) ---------- */
 
-.servings[hidden], .serving[hidden] { display: none; }
+.serving[hidden] { display: none; }
 
 /* ---------- 9. Sin JavaScript: la carta se muestra abierta ---------- */
 

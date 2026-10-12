@@ -1,8 +1,7 @@
 /* =================================================================
    CV interactivo — Martín Aguirre Herrera
-   Etapa 1: portada, apertura, doble página, platos cerrados,
-   contraportada. Las interacciones de Nigiri / Wasabi / Omakase
-   quedan preparadas pero sin desarrollar (etapas 2–4).
+   Portada, apertura, doble página, contraportada y los servicios
+   de Nigiri, Wasabi y Omakase dentro de la página izquierda.
    ================================================================= */
 
 (() => {
@@ -111,11 +110,16 @@
 
   // deslizar horizontalmente
   let swipe = null;
+  // un segundo dedo (zoom con pellizco) anula el deslizamiento
+  let fingers = 0;
   scene.addEventListener("pointerdown", (event) => {
+    if (event.pointerType !== "mouse") fingers += 1;
+    if (fingers > 1) { swipe = null; return; }
     if (!singlePage.matches || book.dataset.state !== "open" || event.pointerType === "mouse") return;
     swipe = { x: event.clientX, y: event.clientY };
   });
   scene.addEventListener("pointerup", (event) => {
+    if (event.pointerType !== "mouse") fingers = Math.max(0, fingers - 1);
     if (!swipe) return;
     const dx = event.clientX - swipe.x;
     const dy = event.clientY - swipe.y;
@@ -123,7 +127,7 @@
     if (Math.abs(dx) < 44 || Math.abs(dx) < Math.abs(dy) * 1.4) return;
     showSide(dx < 0 ? "right" : "left");
   });
-  scene.addEventListener("pointercancel", () => { swipe = null; });
+  scene.addEventListener("pointercancel", () => { swipe = null; fingers = 0; });
 
   /* ---------------------------------------------------------------
      Gestos y teclado
@@ -280,7 +284,6 @@
     const hotspot = event.target.closest(".dish__hotspot");
     if (hotspot) {
       const dish = hotspot.dataset.dish;
-      book.dispatchEvent(new CustomEvent("carta:dish", { bubbles: true, detail: { dish } }));
       if (served && served.dish === dish) closeServing();
       else if (servingFor(dish)) openServing(dish);
       else closeServing();
@@ -296,20 +299,25 @@
      si no, el contenedor permanece limpio (sin marcadores visibles).
      --------------------------------------------------------------- */
 
-  function probe(src) {
+  // carga una imagen en su propio <img> (una sola petición) y avisa si existe
+  function load(img, src) {
     return new Promise((resolve) => {
-      const img = new Image();
-      img.onload = () => resolve(img.naturalWidth > 0);
-      img.onerror = () => resolve(false);
+      img.addEventListener("load", () => resolve(img.naturalWidth > 0), { once: true });
+      img.addEventListener("error", () => { img.removeAttribute("src"); resolve(false); }, { once: true });
       img.src = src;
+    }).then(async (ok) => {
+      // decodificada antes de que la página quede a la vista
+      if (ok) await img.decode?.().catch(() => {});
+      return ok;
     });
   }
 
-  document.querySelectorAll("img[data-src]").forEach(async (img) => {
-    if (await probe(img.dataset.src)) {
-      img.src = img.dataset.src;
-      // decodificada antes de que la página quede a la vista durante la apertura
-      await img.decode?.().catch(() => {});
+  function probe(src) {
+    return load(new Image(), src);
+  }
+
+  document.querySelectorAll("img[data-src]:not(.serving__layer)").forEach(async (img) => {
+    if (await load(img, img.dataset.src)) {
       img.classList.add("is-loaded");
       img.closest(".dish")?.classList.add("has-photo");
     }
@@ -319,15 +327,16 @@
   document.querySelectorAll(".serving").forEach(async (serving) => {
     const layers = [...serving.querySelectorAll(".serving__layer[data-src]")];
     const found = await Promise.all(layers.map(async (img) => {
-      if (!(await probe(img.dataset.src))) return false;
-      img.src = img.dataset.src;
-      await img.decode?.().catch(() => {});
+      if (!(await load(img, img.dataset.src))) return false;
       img.classList.add("is-ready");
       return true;
     }));
     const required = layers.every((img, i) => found[i] || img.hasAttribute("data-optional"));
     serving.classList.toggle("has-layers", layers.length > 0 && required);
   });
+
+  // fondos CSS que solo se ven dentro de un servicio: se traen antes de abrirlo
+  ["assets/decor/giro-wasabi.svg"].forEach(probe);
 
   document.querySelectorAll(".decor[data-asset]").forEach(async (el) => {
     if (await probe(el.dataset.asset)) {
