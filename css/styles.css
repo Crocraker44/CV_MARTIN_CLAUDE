@@ -699,19 +699,25 @@ abbr[title] { text-decoration: none; }
 .quote--traits span + span { padding-left: calc(var(--u) * 2.4); }
 
 .block--chef {
-  margin-top: calc(var(--u) * 2);
-  padding-top: calc(var(--u) * 1.9);
+  margin-top: calc(var(--u) * 1.6);
+  padding-top: calc(var(--u) * 1.6);
   border-top: 1px solid var(--hairline);
 }
 .page .block__lead { margin-top: calc(var(--u) * .45); }
 
-/* Selección del chef: piezas emplatadas en la misma línea de mesa */
+/* Selección del chef: piezas emplatadas sobre la misma línea de mesa.
+   Cada fotografía es un cuadrado con aire transparente; --s fija su tamaño
+   y --pad compensa el margen inferior transparente para que todas apoyen
+   en la misma línea. */
 .dishes {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  margin: calc(var(--u) * 1.6) calc(var(--u) * -2.6) 0 calc(var(--u) * -2.8);
+  margin: calc(var(--u) * .5) calc(var(--u) * -2.6) 0 calc(var(--u) * -2.8);
 }
 .dish { display: flex; justify-content: center; }
+.dish[data-dish="nigiri"]  { --s: 15.6; --pad: .19;  --top: .243; --gw: 62%; --pin: 60%; --pt: 1;    }
+.dish[data-dish="wasabi"]  { --s: 13.2; --pad: .158; --top: .207; --gw: 50%; --pin: 66%; --pt: 1.2;  }
+.dish[data-dish="omakase"] { --s: 13.6; --pad: .106; --top: .092; --gw: 54%; --pin: 64%; --pt: -2.4; }
 
 .dish__hotspot {
   position: relative;
@@ -720,7 +726,7 @@ abbr[title] { text-decoration: none; }
   align-items: center;
   width: 100%;
   margin: 0;
-  padding: 0 0 calc(var(--u) * .4);
+  padding: 0 0 calc(var(--u) * .3);
   border: 0;
   background: none;
   text-align: center;
@@ -734,40 +740,42 @@ abbr[title] { text-decoration: none; }
 .dish__plate {
   position: relative;
   display: block;
-  width: 92%;
-  height: calc(var(--u) * 8.6);
+  width: 100%;
+  height: calc(var(--u) * 11);
   transition: transform .45s cubic-bezier(.3, .6, .3, 1);
 }
-.dish__ground { /* huella / sombra de contacto del plato sobre el papel */
+.dish__ground { /* sombra de contacto: el plato apoya sobre el papel */
   position: absolute;
-  left: 14%;
-  right: 14%;
-  bottom: calc(var(--u) * .2);
-  height: calc(var(--u) * 1.5);
+  left: calc((100% - var(--gw)) / 2);
+  width: var(--gw);
+  bottom: calc(var(--u) * -.5);
+  height: calc(var(--u) * 1.6);
   border-radius: 50%;
-  background: radial-gradient(ellipse at center, rgba(25, 23, 20, .16), rgba(25, 23, 20, .05) 55%, transparent 72%);
+  background: radial-gradient(ellipse at center, rgba(25, 23, 20, .30), rgba(25, 23, 20, .10) 48%, transparent 70%);
   transition: transform .45s cubic-bezier(.3, .6, .3, 1), opacity .45s;
 }
 .dish__photo {
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+  left: calc(50% - var(--u) * var(--s) / 2);
+  bottom: calc(var(--u) * var(--s) * var(--pad) * -1);
+  width: calc(var(--u) * var(--s));
+  height: calc(var(--u) * var(--s));
+  max-width: none;
   object-fit: contain;
-  object-position: 50% 100%;
   opacity: 0;
+  filter: saturate(.9) drop-shadow(0 calc(var(--u) * .35) calc(var(--u) * .35) rgba(25, 23, 20, .22));
   transition: opacity .6s ease;
 }
 .dish__photo.is-loaded { opacity: 1; }
 
-.dish__pin { /* marcador fino, como una nota a lápiz rojo */
+.dish__pin { /* marcador fino, como una nota a lápiz rojo, sobre cada pieza */
   display: none;
   position: absolute;
-  top: calc(var(--u) * -2.4);
-  left: 63%;
+  left: var(--pin);
+  top: calc(var(--u) * var(--pt));
   width: 1px;
-  height: calc(var(--u) * 5.2);
-  background: color-mix(in srgb, var(--red) 75%, transparent);
+  height: calc(var(--u) * (11 - var(--s) * (1 - var(--pad) - var(--top)) - var(--pt) + .3));
+  background: color-mix(in srgb, var(--red) 70%, transparent);
   transition: transform .45s cubic-bezier(.3, .6, .3, 1);
 }
 .dish__pin::before {
@@ -775,23 +783,21 @@ abbr[title] { text-decoration: none; }
   position: absolute;
   top: calc(var(--u) * -.85);
   left: 50%;
-  width: calc(var(--u) * .95);
-  height: calc(var(--u) * .95);
+  width: calc(var(--u) * .9);
+  height: calc(var(--u) * .9);
   border: 1px solid var(--red);
   border-radius: 50%;
   transform: translateX(-50%);
   background: radial-gradient(circle, var(--red) 32%, transparent 38%);
 }
 .dish.has-photo .dish__pin { display: block; }
-.dish[data-dish="wasabi"] .dish__pin { left: 58%; }
-.dish[data-dish="omakase"] .dish__pin { left: 66%; }
 
 .dish__label {
   display: flex;
   align-items: baseline;
   justify-content: center;
   gap: calc(var(--u) * .9);
-  margin-top: calc(var(--u) * .9);
+  margin-top: calc(var(--u) * 1.1);
 }
 .dish__name {
   font-family: var(--f-serif);
@@ -808,7 +814,7 @@ abbr[title] { text-decoration: none; }
   color: var(--ink-soft);
 }
 .dish__meaning {
-  margin-top: calc(var(--u) * .45);
+  margin-top: calc(var(--u) * .35);
   font-size: calc(var(--u) * 1.8);
   line-height: 1.1;
   white-space: nowrap;
@@ -817,7 +823,7 @@ abbr[title] { text-decoration: none; }
 @media (hover: hover) {
   .dish__hotspot:hover .dish__plate,
   .dish__hotspot:hover .dish__pin { transform: translateY(calc(var(--u) * -.3)); }
-  .dish__hotspot:hover .dish__ground { transform: scale(1.06); opacity: .8; }
+  .dish__hotspot:hover .dish__ground { transform: translateY(calc(var(--u) * .3)) scale(1.08); opacity: .75; }
 }
 .dish__hotspot:focus-visible .dish__plate,
 .dish__hotspot:focus-visible .dish__pin { transform: translateY(calc(var(--u) * -.3)); }
@@ -827,29 +833,45 @@ abbr[title] { text-decoration: none; }
   position: absolute;
   z-index: 3;
   left: calc(var(--u) * 2.7);
-  bottom: calc(var(--u) * 3.1);
+  bottom: calc(var(--u) * 2.4);
   width: calc(var(--u) * 4.4);
   opacity: .88;
   mix-blend-mode: multiply;
 }
 
+/* tinta secundaria: montañas al pie y rama de cerezo, siempre por detrás del texto */
 .page__mountains {
   z-index: 1;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: calc(var(--u) * 11);
+  left: calc(var(--u) * -1);
+  right: calc(var(--u) * -1);
+  bottom: calc(var(--u) * -2.6);
+  height: calc(var(--u) * 13);
   background-position: 50% 100%;
   background-size: 100% auto;
-  opacity: .9;
+  opacity: .34;
+  mix-blend-mode: multiply;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 18%, #000 60%);
+  mask-image: linear-gradient(to bottom, transparent 18%, #000 60%);
+}
+.page__mountains--right { /* solo un fragmento, bajo la rama */
+  left: auto;
+  right: calc(var(--u) * -12);
+  width: calc(var(--u) * 46);
+  height: calc(var(--u) * 9);
+  bottom: calc(var(--u) * -2.2);
+  background-size: 100% auto;
+  opacity: .26;
 }
 .page__sakura {
   z-index: 1;
-  right: 0;
-  bottom: calc(var(--u) * 2);
-  width: calc(var(--u) * 17);
-  height: calc(var(--u) * 54);
+  right: calc(var(--u) * -2.4);
+  bottom: calc(var(--u) * 3.2);
+  width: calc(var(--u) * 15);
+  height: calc(var(--u) * 45);
   background-position: 100% 100%;
+  opacity: .72;
+  filter: saturate(.78);
+  mix-blend-mode: multiply;
 }
 
 /* — página derecha — */

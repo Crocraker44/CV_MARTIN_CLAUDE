@@ -7,7 +7,7 @@ Abrir `index.html` en el navegador (no requiere servidor ni compilación).
 
 ## Estado
 
-**Etapa 1 — terminada, pendiente de revisión.**
+**Etapa 1 — terminada con assets integrados, pendiente de revisión.**
 Portada · apertura · doble página interior · Nigiri / Wasabi / Omakase en estado cerrado · contraportada.
 
 Las etapas 2–5 (interacciones de cada plato, pulido responsive y publicación) no están desarrolladas.
@@ -20,7 +20,8 @@ css/styles.css             materia, tipografía, composición y giro 3D (todo en
 js/interactions.js         estados (cerrada → abierta → contraportada), teclado, gesto táctil,
                            carga de assets pendientes, arquitectura de hotspots
 assets/brand/sello-mah.png sello MAH en rojo #B12622 (extraído del sello proporcionado)
-assets/decor/*.svg         sol y olas de pincel seco (portada y contraportada)
+assets/decor/              sol y olas (SVG), montañas sumi y rama sakura (PNG)
+assets/products/           Nigiri, Wasabi y Omakase (PNG transparentes)
 references/                referencias visuales maestras
 ```
 
@@ -31,15 +32,14 @@ references/                referencias visuales maestras
 - Teclado: ← / →.
 - Pantallas verticales: se ve una página a la vez; tocar el borde de la otra página o deslizar.
 
-## Assets pendientes
+## Assets
 
-Los contenedores ya existen y cargan el archivo automáticamente cuando aparece en la ruta indicada;
-mientras tanto no muestran nada.
-
-| Ruta                               | Contenido                                                     |
-|------------------------------------|---------------------------------------------------------------|
-| `assets/products/nigiri.png`       | Nigiri emplatado, PNG con fondo transparente                  |
-| `assets/products/wasabi.png`       | Wasabi en cuenco, PNG con fondo transparente                  |
-| `assets/products/omakase.png`      | Omakase emplatado, PNG con fondo transparente                 |
-| `assets/decor/montanas-sumi.png`   | Franja de montañas sumi-e para el pie de ambas páginas        |
-| `assets/decor/rama-sakura.png`     | Rama de cerezo en tinta para el borde derecho de la página    |
+| Ruta                               | Uso                                                          |
+|------------------------------------|--------------------------------------------------------------|
+| `assets/brand/sello-mah.png`       | Sello MAH (portada, página izquierda, contraportada)         |
+| `assets/decor/*.svg`               | Sol y olas de pincel seco                                    |
+| `assets/decor/montanas-sumi.png`   | Montañas sumi-e al pie de las páginas                        |
+| `assets/decor/rama-sakura.png`     | Rama de cerezo en el borde derecho                           |
+| `assets/products/nigiri.png`       | Selección del chef — Nigiri                                  |
+| `assets/products/wasabi.png`       | Selección del chef — Wasabi                                  |
+| `assets/products/omakase.png`      | Selección del chef — Omakase                                 |

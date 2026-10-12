@@ -178,6 +178,8 @@
   document.querySelectorAll("img[data-src]").forEach(async (img) => {
     if (await probe(img.dataset.src)) {
       img.src = img.dataset.src;
+      // decodificada antes de que la página quede a la vista durante la apertura
+      await img.decode?.().catch(() => {});
       img.classList.add("is-loaded");
       img.closest(".dish")?.classList.add("has-photo");
     }
