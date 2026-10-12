@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="es" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Martín Aguirre Herrera — Carta</title>
+  <meta name="description" content="Martín Aguirre Herrera · Estudiante de Publicidad · Social Media &amp; Content. Mi CV se sirve a la carta.">
+  <meta name="theme-color" content="#0D0D0C">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Klee+One&family=Shippori+Mincho:wght@400;500&display=swap">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- ============================================================
+       Tinta y materia: filtros SVG compartidos (no son imágenes:
+       son procesos que dan rugosidad de pincel y de impresión).
+       ============================================================ -->
+  <svg class="defs" width="0" height="0" aria-hidden="true" focusable="false">
+    <defs>
+      <!-- Borde irregular de tinta sobre papel -->
+      <filter id="f-ink" x="-5%" y="-40%" width="110%" height="180%" color-interpolation-filters="sRGB">
+        <feTurbulence type="fractalNoise" baseFrequency="0.09" numOctaves="2" seed="4" result="warp"/>
+        <feDisplacementMap in="SourceGraphic" in2="warp" scale="3.2" xChannelSelector="R" yChannelSelector="G"/>
+      </filter>
+
+      <!-- Trazo de pincel corto (subrayados rojos) -->
+      <symbol id="brush-line" viewBox="0 0 200 14" preserveAspectRatio="none">
+        <path d="M1.5 8.6 C 22 5.4, 60 4.1, 104 4.3 C 140 4.4, 172 4.9, 198.5 6.2 C 186 7.6, 160 8.7, 128 9.6 C 88 10.8, 44 11.1, 3 10.6 C 1.2 10.2, 0.6 9.4, 1.5 8.6 Z"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <main class="scene" id="scene">
+
+    <!-- La carta: un único objeto con dos tapas que giran sobre el lomo -->
+    <div class="book" id="book" data-state="closed" data-side="left">
+
+      <div class="book__shadow" aria-hidden="true"></div>
+
+      <!-- =========================================================
+           TAPA DELANTERA
+           cara exterior = portada · cara interior = página izquierda
+           ========================================================= -->
+      <div class="board board--front">
+
+        <!-- PORTADA -->
+        <section class="face face--cover cover" id="face-cover" aria-label="Portada de la carta">
+          <div class="cover__grain" aria-hidden="true"></div>
+
+          <div class="binding binding--left" aria-hidden="true">
+            <span class="binding__groove"></span>
+            <span class="binding__thread"></span>
+            <span class="binding__stitch" style="--y: 12%"></span>
+            <span class="binding__stitch" style="--y: 37.3%"></span>
+            <span class="binding__stitch" style="--y: 62.7%"></span>
+            <span class="binding__stitch" style="--y: 88%"></span>
+          </div>
+
+          <span class="seal cover__seal" aria-hidden="true"></span>
+
+          <div class="cover__title">
+            <h1 class="cover__name">
+              <span>Martín</span>
+              <span>Aguirre Herrera</span>
+            </h1>
+            <p class="cover__role">
+              <span>Estudiante de Publicidad</span>
+              <span>Social Media &amp; Content</span>
+            </p>
+            <svg class="brush cover__brush" aria-hidden="true" focusable="false"><use href="#brush-line"/></svg>
+          </div>
+
+          <p class="cover__motto hand">
+            <span>Mi CV se sirve</span>
+            <span>a la carta.</span>
+          </p>
+
+          <!-- Sol y ola: capas independientes (trazos de pincel en SVG) -->
+          <img class="decor cover__sun" src="assets/decor/sol-portada.svg" alt="" aria-hidden="true">
+          <img class="decor cover__wave" src="assets/decor/ola-portada.svg" alt="" aria-hidden="true">
+
+          <span class="cover__edge" aria-hidden="true"></span>
+
+          <!-- Toda la portada es el gesto de apertura -->
+          <button class="face__hit" type="button" data-action="open" aria-label="Abrir la carta"></button>
+        </section>
+
+        <!-- PÁGINA IZQUIERDA -->
+        <section class="face face--inside face--left" id="face-left" aria-label="Carta abierta, página izquierda">
+          <article class="page page--left">
+            <div class="paper" aria-hidden="true"></div>
+
+            <header class="masthead">
+              <p class="kicker">Selección de la casa</p>
+              <h2 class="masthead__name" id="page-start" tabindex="-1">Martín Aguirre Herrera</h2>
+              <p class="masthead__role">Estudiante de Publicidad <span class="sep" aria-hidden="true">·</span> Social Media &amp; Content</p>
+              <svg class="brush masthead__brush" aria-hidden="true" focusable="false"><use href="#brush-line"/></svg>
+            </header>
+
+            <section class="block block--about" aria-labelledby="h-about">
+              <h3 class="heading" id="h-about">Sobre mí</h3>
+              <p>Soy estudiante de Publicidad con especial interés en Social Media, contenido y creatividad.</p>
+              <p>Me gusta proponer ideas, presentarlas y desarrollarlas hasta que cada parte tenga sentido dentro de un concepto.</p>
+              <p>Busco una práctica donde pueda aprender, aportar y seguir ampliando mi forma de mirar la publicidad, explorando distintas áreas y desarrollando una mirada cada vez más versátil.</p>
+            </section>
+
+            <section class="block block--traits" aria-labelledby="h-traits">
+              <h3 class="heading" id="h-traits">Mi forma de trabajar</h3>
+              <!-- data-dish: rasgo que, en etapas siguientes, sirve el plato -->
+              <ul class="traits">
+                <li class="trait" data-trait="creativo" data-dish="omakase">Creativo</li>
+                <li class="trait" data-trait="curioso">Curioso</li>
+                <li class="trait" data-trait="espontaneo" data-dish="wasabi">Espontáneo</li>
+                <li class="trait" data-trait="colaborativo">Colaborativo</li>
+                <li class="trait" data-trait="prolijo" data-dish="nigiri">Prolijo</li>
+              </ul>
+              <p class="hand quote quote--traits">
+                <span>“Cuando tengo una idea,</span>
+                <span>intento llevarla lo más lejos posible.”</span>
+              </p>
+            </section>
+
+            <section class="block block--chef" aria-labelledby="h-chef">
+              <h3 class="heading" id="h-chef">Selección del chef</h3>
+              <p class="block__lead">Tres formas de entender mi creatividad.</p>
+
+              <ul class="dishes">
+                <li class="dish" data-dish="nigiri" data-trait="prolijo">
+                  <button class="dish__hotspot" type="button" data-dish="nigiri" aria-expanded="false" aria-controls="serving-nigiri">
+                    <span class="dish__plate">
+                      <span class="dish__ground" aria-hidden="true"></span>
+                      <img class="dish__photo" data-src="assets/products/nigiri.png" alt="" decoding="async">
+                    </span>
+                    <span class="dish__pin" aria-hidden="true"></span>
+                    <span class="dish__label">
+                      <span class="dish__name">Nigiri</span>
+                      <span class="dish__jp" lang="ja">にぎり</span>
+                    </span>
+                    <span class="dish__meaning hand">Prolijidad</span>
+                  </button>
+                </li>
+                <li class="dish" data-dish="wasabi" data-trait="espontaneo">
+                  <button class="dish__hotspot" type="button" data-dish="wasabi" aria-expanded="false" aria-controls="serving-wasabi">
+                    <span class="dish__plate">
+                      <span class="dish__ground" aria-hidden="true"></span>
+                      <img class="dish__photo" data-src="assets/products/wasabi.png" alt="" decoding="async">
+                    </span>
+                    <span class="dish__pin" aria-hidden="true"></span>
+                    <span class="dish__label">
+                      <span class="dish__name">Wasabi</span>
+                      <span class="dish__jp" lang="ja">わさび</span>
+                    </span>
+                    <span class="dish__meaning hand">Atrevimiento</span>
+                  </button>
+                </li>
+                <li class="dish" data-dish="omakase" data-trait="creativo">
+                  <button class="dish__hotspot" type="button" data-dish="omakase" aria-expanded="false" aria-controls="serving-omakase">
+                    <span class="dish__plate">
+                      <span class="dish__ground" aria-hidden="true"></span>
+                      <img class="dish__photo" data-src="assets/products/omakase.png" alt="" decoding="async">
+                    </span>
+                    <span class="dish__pin" aria-hidden="true"></span>
+                    <span class="dish__label">
+                      <span class="dish__name">Omakase</span>
+                      <span class="dish__jp" lang="ja">おまかせ</span>
+                    </span>
+                    <span class="dish__meaning hand">Llevar una idea más lejos</span>
+                  </button>
+                </li>
+              </ul>
+            </section>
+
+            <span class="seal page__seal" aria-hidden="true"></span>
+            <div class="decor page__mountains" data-asset="assets/decor/montanas-sumi.png" aria-hidden="true"></div>
+
+            <!-- Servicio Nigiri (etapa 2): ocurre dentro del papel de esta página.
+                 Las capas se usan solas cuando existen sus archivos; si no, la
+                 pieza entera sube y se anota sin descomponerse. -->
+            <section class="serving serving--nigiri" id="serving-nigiri" data-dish="nigiri" aria-label="Nigiri — Prolijidad" hidden>
+              <div class="serving__stack" aria-hidden="true">
+                <span class="serving__ground"></span>
+                <img class="serving__whole" src="assets/products/nigiri.png" alt="">
+                <img class="serving__layer" data-layer="arroz" data-src="assets/products/nigiri-arroz.png" alt="">
+                <img class="serving__layer" data-layer="union" data-src="assets/products/nigiri-union.png" alt="">
+                <img class="serving__layer" data-layer="pescado" data-src="assets/products/nigiri-pescado.png" alt="">
+              </div>
+              <svg class="serving__guides" viewBox="0 0 618 500" aria-hidden="true" focusable="false">
+                <g><path d="M170 100 L372 100" pathLength="1"/><circle cx="170" cy="100" r="4"/></g>
+                <g><path d="M168 232 L372 232" pathLength="1"/><circle cx="168" cy="232" r="4"/></g>
+                <g><path d="M196 333 L372 333" pathLength="1"/><circle cx="196" cy="333" r="4"/></g>
+              </svg>
+              <dl class="serving__notes">
+                <div class="serving__note" style="--y: 10"><dt>Detalle</dt><dd>Cuidar lo pequeño.</dd></div>
+                <div class="serving__note" style="--y: 23.2"><dt>Coherencia</dt><dd>Cada elemento responde al concepto.</dd></div>
+                <div class="serving__note" style="--y: 33.3"><dt>Estructura</dt><dd>Una buena base sostiene una buena idea.</dd></div>
+              </dl>
+              <p class="serving__quote hand">“Me gusta perfeccionar las ideas creativas y cuidar que cada elemento tenga sentido dentro del concepto.”</p>
+            </section>
+
+            <!-- Servicio Wasabi (etapa 3): reconocible → giro → impacto.
+                 Una pincelada sumi atraviesa la página y lleva la pieza fuera de lo esperado. -->
+            <section class="serving serving--wasabi" id="serving-wasabi" data-dish="wasabi" data-open="950,1150" data-close="260,760,380" aria-label="Wasabi — Atrevimiento" hidden>
+              <svg class="wsb__ring" viewBox="0 0 618 500" aria-hidden="true" focusable="false">
+                <circle cx="112" cy="134" r="104" pathLength="1"/>
+              </svg>
+              <div class="wsb__stroke" aria-hidden="true"></div>
+              <div class="serving__stack" aria-hidden="true">
+                <div class="wsb__tilt">
+                  <span class="serving__ground"></span>
+                  <img class="serving__whole" src="assets/products/wasabi.png" alt="">
+                </div>
+              </div>
+              <svg class="wsb__splash" viewBox="0 0 618 500" aria-hidden="true" focusable="false">
+                <g filter="url(#f-ink)">
+                  <circle cx="508" cy="98" r="5.2"/>
+                  <ellipse cx="533" cy="76" rx="3.4" ry="2.2"/>
+                  <circle cx="494" cy="70" r="2"/>
+                  <circle cx="552" cy="101" r="1.7"/>
+                  <circle cx="524" cy="122" r="2.3"/>
+                  <circle cx="561" cy="64" r="1.2"/>
+                </g>
+              </svg>
+              <dl class="wsb__beats">
+                <div class="wsb__beat" style="--x: 1;  --y: 23"><dt>Reconocible</dt><dd>Partir desde algo conocido.</dd></div>
+                <div class="wsb__beat" style="--x: 25; --y: 5"><dt>Giro</dt><dd>Introducir una vuelta inesperada.</dd></div>
+                <div class="wsb__beat" style="--x: 46; --y: 32"><dt>Impacto</dt><dd>Generar algo que sorprenda.</dd></div>
+              </dl>
+              <p class="serving__quote hand wsb__quote">“Me gusta partir desde algo reconocible y agregar ese giro que hace que una idea salga de lo esperado.”</p>
+            </section>
+
+            <!-- Servicio Omakase (etapa 4): explorar → desarrollar → perfeccionar → llevar más lejos.
+                 La pieza avanza sobre una línea de emplatado y crece; cada estado
+                 anterior queda como un borrador a lápiz. Al final, el sello del chef. -->
+            <section class="serving serving--omakase" id="serving-omakase" data-dish="omakase" data-open="650,1000" data-further="1000,640" data-close="600,640,250" aria-label="Omakase — Llevar una idea más lejos" hidden>
+              <svg class="omk__line" viewBox="0 0 618 500" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+                <path class="omk__run omk__run--a" d="M8 313 L182 313" pathLength="1"/>
+                <path class="omk__run omk__run--b" d="M182 313 L337 313" pathLength="1"/>
+                <path class="omk__run omk__run--c" d="M337 313 L606 313" pathLength="1"/>
+              </svg>
+              <img class="omk__ghost omk__ghost--a" src="assets/products/omakase.png" alt="" aria-hidden="true">
+              <img class="omk__ghost omk__ghost--b" src="assets/products/omakase.png" alt="" aria-hidden="true">
+              <img class="omk__ghost omk__ghost--c" src="assets/products/omakase.png" alt="" aria-hidden="true">
+              <div class="omk__travel" aria-hidden="true">
+                <span class="serving__ground"></span>
+                <img class="serving__whole" src="assets/products/omakase.png" alt="">
+              </div>
+              <span class="seal omk__seal" aria-hidden="true"></span>
+              <dl class="omk__steps">
+                <div class="omk__step" style="--x: 5.1;   --w: 11"><dt><span class="omk__tick"></span><span class="omk__num">01 —</span> Explorar</dt><dd>Buscar nuevas posibilidades.</dd></div>
+                <div class="omk__step" style="--x: 18.6;  --w: 12.5"><dt><span class="omk__tick"></span><span class="omk__num">02 —</span> Desarrollar</dt><dd>Dar forma y profundidad a la idea.</dd></div>
+                <div class="omk__step" style="--x: 33.75; --w: 13.5"><dt><span class="omk__tick"></span><span class="omk__num">03 —</span> Perfeccionar</dt><dd>Cuidar los detalles y llevarla más allá.</dd></div>
+                <div class="omk__step" style="--x: 50.25; --w: 18.5"><dt><span class="omk__tick"></span><span class="omk__num">04 —</span> Llevar más lejos</dt><dd>Explorar hasta dónde puede llegar.</dd></div>
+              </dl>
+              <p class="serving__quote hand omk__quote">“Cuando tengo una idea, intento llevarla lo más lejos posible.”</p>
+            </section>
+          </article>
+          <span class="gutter gutter--left" aria-hidden="true"></span>
+        </section>
+      </div>
+
+      <!-- =========================================================
+           TAPA TRASERA
+           cara interior = página derecha · cara exterior = contraportada
+           ========================================================= -->
+      <div class="board board--back">
+
+        <!-- PÁGINA DERECHA -->
+        <section class="face face--inside face--right" id="face-right" aria-label="Carta abierta, página derecha">
+          <article class="page page--right">
+            <div class="paper" aria-hidden="true"></div>
+
+            <section class="block block--offer" aria-labelledby="h-offer">
+              <p class="kicker">Perfil</p>
+              <h2 class="heading heading--lead" id="h-offer">Qué aporto</h2>
+              <svg class="brush offer__brush" aria-hidden="true" focusable="false"><use href="#brush-line"/></svg>
+              <ul class="offer">
+                <li>Creatividad conceptual</li>
+                <li>Desarrollo de ideas</li>
+                <li>Presentación y comunicación</li>
+                <li>Contenido para redes sociales</li>
+                <li>Trabajo en equipo</li>
+                <li>Ganas de aprender y aportar</li>
+              </ul>
+            </section>
+
+            <section class="block block--tools" aria-labelledby="h-tools">
+              <h3 class="heading" id="h-tools">Herramientas</h3>
+              <ul class="inline-list inline-list--tools">
+                <li>Canva</li><li>CapCut</li><li>TikTok</li><li>Instagram</li>
+                <li>Photoshop</li><li><abbr title="Inteligencia Artificial">IA</abbr></li><li>Meta Business</li>
+              </ul>
+            </section>
+
+            <section class="block block--interests" aria-labelledby="h-interests">
+              <h3 class="heading" id="h-interests">Intereses</h3>
+              <ul class="inline-list">
+                <li>Gastronomía</li><li>Música</li><li>Deportes</li><li>Cine</li>
+              </ul>
+              <p class="hand quote quote--interests">“Lo que consumo también alimenta lo que creo.”</p>
+            </section>
+
+            <div class="ledger">
+              <section class="ledger__item" aria-labelledby="h-edu">
+                <h3 class="label" id="h-edu">Formación</h3>
+                <p class="ledger__lead">Publicidad</p>
+                <p>Universidad Finis Terrae</p>
+                <p>4° año</p>
+                <p class="ledger__note">Egreso estimado:<br>primer semestre de 2027</p>
+              </section>
+
+              <section class="ledger__item" aria-labelledby="h-lang">
+                <h3 class="label" id="h-lang">Idiomas</h3>
+                <dl class="leaders">
+                  <div><dt>Español</dt><dd>Nativo</dd></div>
+                  <div><dt>Inglés</dt><dd>B1</dd></div>
+                </dl>
+              </section>
+
+              <section class="ledger__item" aria-labelledby="h-contact">
+                <h3 class="label" id="h-contact">Contacto</h3>
+                <address class="contact">
+                  <span>Santiago, Chile</span>
+                  <a href="mailto:martinaguirre2002@gmail.com">martinaguirre2002@gmail.com</a>
+                  <a href="tel:+56973866688">+56 9 7386 6688</a>
+                </address>
+              </section>
+
+              <section class="ledger__item ledger__item--availability" aria-labelledby="h-avail">
+                <h3 class="label" id="h-avail">Práctica</h3>
+                <p class="availability">Disponible desde<br>diciembre de 2026.</p>
+                <p class="ledger__note">Duración aproximada: 3 meses.</p>
+              </section>
+            </div>
+
+            <div class="decor page__sakura" data-asset="assets/decor/rama-sakura.png" aria-hidden="true"></div>
+            <div class="decor page__mountains page__mountains--right" data-asset="assets/decor/montanas-sumi.png" aria-hidden="true"></div>
+
+          </article>
+          <span class="gutter gutter--right" aria-hidden="true"></span>
+        </section>
+
+        <!-- CONTRAPORTADA -->
+        <section class="face face--backcover cover cover--back" id="face-back" aria-label="Contraportada de la carta">
+          <div class="cover__grain" aria-hidden="true"></div>
+
+          <!-- el reverso solo deja ver la bisagra del lomo, como en la referencia -->
+          <div class="binding binding--right" aria-hidden="true">
+            <span class="binding__groove"></span>
+          </div>
+
+          <div class="back__colophon">
+            <span class="seal back__seal" aria-hidden="true"></span>
+            <p class="back__name">Martín Aguirre Herrera</p>
+            <p class="back__role">Publicidad <span aria-hidden="true">·</span> Social Media &amp; Content</p>
+            <span class="back__rule" aria-hidden="true"></span>
+          </div>
+
+          <img class="decor back__wave" src="assets/decor/ola-contraportada.svg" alt="" aria-hidden="true">
+
+          <span class="cover__edge" aria-hidden="true"></span>
+
+          <button class="face__hit" type="button" data-action="open-back" aria-label="Volver a abrir la carta"></button>
+        </section>
+      </div>
+
+    </div>
+
+    <!-- Sobre la mesa, fuera del objeto: indicaciones mínimas -->
+    <p class="table-hint" aria-hidden="true">
+      <span class="table-hint__text" data-for="closed">Abrir la carta</span>
+      <span class="table-hint__text" data-for="back">Volver a abrir</span>
+    </p>
+    <nav class="table-nav" aria-label="Pasar de cara">
+      <button class="table-nav__link table-nav__link--front" type="button" data-action="close-front">Portada</button>
+      <button class="table-nav__link table-nav__link--back" type="button" data-action="close-back">Contraportada</button>
+    </nav>
+  </main>
+
+  <script src="js/interactions.js" defer></script>
+</body>
+</html>
