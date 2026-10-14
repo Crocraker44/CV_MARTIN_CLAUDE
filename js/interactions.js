@@ -167,7 +167,7 @@
      Gestos y teclado
      --------------------------------------------------------------- */
 
-  document.addEventListener("click", (event) => {
+  scene.addEventListener("click", (event) => {
     const trigger = event.target.closest("[data-action]");
     if (!trigger) return;
     const action = trigger.dataset.action;
@@ -341,7 +341,7 @@
     s.serving.querySelector(".serving__whole").getAnimations().forEach((a) => a.cancel());
   }
 
-  document.addEventListener("click", (event) => {
+  scene.addEventListener("click", (event) => {
     const hotspot = event.target.closest(".dish__hotspot");
     if (hotspot) {
       const dish = hotspot.dataset.dish;
@@ -409,6 +409,17 @@
   /* ---------------------------------------------------------------
      Inicio
      --------------------------------------------------------------- */
+
+  // al volver con «atrás» (caché de página de Safari) o al regresar a la pestaña,
+  // ninguna animación puede quedar a medias: se asienta el estado actual
+  window.addEventListener("pageshow", (event) => {
+    if (!event.persisted) return;
+    resetServing();
+    settle();
+  });
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "visible" && busy && Date.now() > busyUntil) settle();
+  });
 
   setState(book.dataset.state || "closed");
   syncNav();

@@ -7,7 +7,7 @@ Abrir `index.html` en el navegador (no requiere servidor ni compilación).
 
 ## Estado
 
-**Publicado (main).** Rama `claude/final-tipografia-mobile`: refinamiento tipográfico, papel seigaiha y corrección táctil — en revisión.
+**Publicado (main).** Rama `claude/final-ajustes-tipografia-fondo-mobile`: cuerpo en Noto Sans JP, papel con koi y auditoría táctil — en revisión. Títulos en Hanami pendientes del archivo de fuente.
 Portada · apertura · doble página interior · servicios Nigiri / Wasabi / Omakase · contraportada.
 
 ## Estructura
@@ -18,7 +18,7 @@ css/styles.css             materia, tipografía, composición y giro 3D (todo en
 js/interactions.js         estados (cerrada → abierta → contraportada), teclado, gesto táctil,
                            carga de assets pendientes, arquitectura de hotspots
 assets/brand/sello-mah.webp sello MAH en rojo #B12622 (extraído del sello proporcionado)
-assets/decor/              sol, olas, pincelada y seigaiha (SVG); montañas sumi y rama sakura (WebP)
+assets/decor/              sol, olas y pincelada (SVG); koi del papel, montañas sumi y rama sakura (WebP)
 assets/products/           Nigiri, Wasabi, Omakase y capas de Nigiri (WebP transparentes, 760 px)
 references/                referencias visuales maestras; originales/ guarda los PNG a tamaño completo
 ```
@@ -40,7 +40,7 @@ references/                referencias visuales maestras; originales/ guarda los
 | `assets/decor/montanas-sumi.webp`  | Montañas sumi-e al pie de las páginas                        |
 | `assets/decor/rama-sakura.webp`    | Rama de cerezo en el borde derecho                           |
 | `assets/decor/giro-wasabi.svg`     | Pincelada sumi del «giro» (servicio Wasabi)                  |
-| `assets/decor/seigaiha-*.svg`      | Olas seigaiha muy tenues en el papel interior                |
+| `assets/decor/koi-papel.webp`      | Koi en tinta tenue sobre el papel interior (multiply)        |
 | `assets/products/nigiri.webp`      | Selección del chef — Nigiri                                  |
 | `assets/products/wasabi.webp`      | Selección del chef — Wasabi                                  |
 | `assets/products/omakase.webp`     | Selección del chef — Omakase                                 |

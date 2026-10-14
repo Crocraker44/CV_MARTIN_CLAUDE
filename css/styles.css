@@ -17,12 +17,12 @@
   --ink:    #191714;
 
   /* derivados de la misma paleta (sombras y fondos, no colores nuevos) */
-  --table:      color-mix(in srgb, var(--carbon) 93%, var(--paper));
-  --red-shade:  color-mix(in srgb, var(--red) 72%, var(--carbon));
-  --ink-soft:   color-mix(in srgb, var(--ink) 74%, var(--paper));
-  --ink-faint:  color-mix(in srgb, var(--ink) 45%, var(--paper));
-  --hairline:   color-mix(in srgb, var(--ink) 20%, transparent);
-  --paper-dim:  color-mix(in srgb, var(--paper) 88%, transparent);
+  --table:      #1D1C19;
+  --red-shade:  #831F1C;
+  --ink-soft:   #504C43;
+  --ink-faint:  #8E8778;
+  --hairline:   rgba(25, 23, 20, 0.2);
+  --paper-dim:  rgba(238, 227, 202, 0.88);
 
   --f-serif:  "Cormorant Garamond", "Cormorant", Garamond, "Times New Roman", serif;
   --f-mincho: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif;
@@ -74,8 +74,8 @@ body {
   background-color: var(--table);
   /* la mesa: grano apagado para que no compita con la carta */
   background-image:
-    radial-gradient(ellipse 70% 62% at 50% 46%, color-mix(in srgb, var(--paper) 3.5%, transparent), transparent 72%),
-    linear-gradient(color-mix(in srgb, var(--carbon) 45%, transparent), color-mix(in srgb, var(--carbon) 45%, transparent)),
+    radial-gradient(ellipse 70% 62% at 50% 46%, rgba(238, 227, 202, 0.035), transparent 72%),
+    linear-gradient(rgba(13, 13, 12, 0.45), rgba(13, 13, 12, 0.45)),
     var(--tex-board);
   background-size: 100% 100%, 100% 100%, 220px 220px;
   color: var(--ink);
@@ -231,7 +231,7 @@ abbr[title] { text-decoration: none; }
   inset: 0;
   z-index: 7;
   background-image:
-    radial-gradient(ellipse 90% 70% at 30% 18%, color-mix(in srgb, var(--paper) 3.5%, transparent), transparent 70%),
+    radial-gradient(ellipse 90% 70% at 30% 18%, rgba(238, 227, 202, 0.035), transparent 70%),
     var(--tex-board),
     var(--tex-board-deep);
   background-size: 100% 100%, 220px 220px, 500px 500px;
@@ -246,8 +246,8 @@ abbr[title] { text-decoration: none; }
   border-radius: inherit;
   pointer-events: none;
   box-shadow:
-    inset 0 0 0 1px color-mix(in srgb, var(--paper) 6%, transparent),
-    inset 0 calc(var(--u) * .25) calc(var(--u) * .4) color-mix(in srgb, var(--paper) 4%, transparent),
+    inset 0 0 0 1px rgba(238, 227, 202, 0.06),
+    inset 0 calc(var(--u) * .25) calc(var(--u) * .4) rgba(238, 227, 202, 0.04),
     inset 0 0 calc(var(--u) * 3) rgba(0, 0, 0, .55);
 }
 
@@ -269,7 +269,7 @@ abbr[title] { text-decoration: none; }
   background: linear-gradient(to right,
     rgba(0, 0, 0, .75),
     rgba(0, 0, 0, .35) 45%,
-    color-mix(in srgb, var(--paper) 7%, transparent) 70%,
+    rgba(238, 227, 202, 0.07) 70%,
     transparent);
 }
 .binding__thread,
@@ -282,13 +282,13 @@ abbr[title] { text-decoration: none; }
 /* hilo torcido con volumen: hebras diagonales + sombreado cilíndrico */
 .binding__thread {
   background-image:
-    repeating-linear-gradient(28deg, transparent 0 calc(var(--u) * .22), color-mix(in srgb, var(--red-shade) 80%, transparent) calc(var(--u) * .22) calc(var(--u) * .32)),
-    linear-gradient(to right, var(--red-shade), var(--red) 35%, color-mix(in srgb, var(--red) 80%, var(--paper)) 50%, var(--red) 65%, var(--red-shade));
+    repeating-linear-gradient(28deg, transparent 0 calc(var(--u) * .22), rgba(131, 31, 28, 0.8) calc(var(--u) * .22) calc(var(--u) * .32)),
+    linear-gradient(to right, var(--red-shade), var(--red) 35%, #BD4C44 50%, var(--red) 65%, var(--red-shade));
 }
 .binding__stitch {
   background-image:
-    repeating-linear-gradient(62deg, transparent 0 calc(var(--u) * .22), color-mix(in srgb, var(--red-shade) 80%, transparent) calc(var(--u) * .22) calc(var(--u) * .32)),
-    linear-gradient(to bottom, var(--red-shade), var(--red) 35%, color-mix(in srgb, var(--red) 80%, var(--paper)) 50%, var(--red) 65%, var(--red-shade));
+    repeating-linear-gradient(62deg, transparent 0 calc(var(--u) * .22), rgba(131, 31, 28, 0.8) calc(var(--u) * .22) calc(var(--u) * .32)),
+    linear-gradient(to bottom, var(--red-shade), var(--red) 35%, #BD4C44 50%, var(--red) 65%, var(--red-shade));
 }
 .binding__thread {
   top: 12%;
@@ -473,7 +473,7 @@ abbr[title] { text-decoration: none; }
 }
 .face__hit:focus { outline: none; }
 .face__hit:focus-visible {
-  outline: 1px solid color-mix(in srgb, var(--paper) 35%, transparent);
+  outline: 1px solid rgba(238, 227, 202, 0.35);
   outline-offset: calc(var(--u) * -1.6);
 }
 
@@ -503,9 +503,9 @@ abbr[title] { text-decoration: none; }
   border-radius: calc(var(--u) * .25) 0 0 calc(var(--u) * .25);
   /* canto de las hojas */
   box-shadow:
-    -1px 0 0 color-mix(in srgb, var(--paper) 80%, var(--ink)),
+    -1px 0 0 #C3BAA6,
     -2px 0 0 var(--paper),
-    -3px 0 0 color-mix(in srgb, var(--paper) 75%, var(--ink)),
+    -3px 0 0 #B9B09C,
     -4px 1px 2px rgba(0, 0, 0, .5);
 }
 .page--right {
@@ -514,9 +514,9 @@ abbr[title] { text-decoration: none; }
   padding: calc(var(--u) * 5) calc(var(--u) * 7.6) 0 calc(var(--u) * 6.4);
   border-radius: 0 calc(var(--u) * .25) calc(var(--u) * .25) 0;
   box-shadow:
-    1px 0 0 color-mix(in srgb, var(--paper) 80%, var(--ink)),
+    1px 0 0 #C3BAA6,
     2px 0 0 var(--paper),
-    3px 0 0 color-mix(in srgb, var(--paper) 75%, var(--ink)),
+    3px 0 0 #B9B09C,
     4px 1px 2px rgba(0, 0, 0, .5);
 }
 
@@ -528,9 +528,9 @@ abbr[title] { text-decoration: none; }
   border-radius: inherit;
   pointer-events: none;
   background-image:
-    radial-gradient(ellipse 120% 95% at 50% 48%, transparent 58%, color-mix(in srgb, #8a6a3a 16%, transparent) 100%),
-    radial-gradient(circle at 82% 14%, color-mix(in srgb, #9a7a48 7%, transparent), transparent 9%),
-    radial-gradient(circle at 16% 71%, color-mix(in srgb, #9a7a48 5%, transparent), transparent 7%),
+    radial-gradient(ellipse 120% 95% at 50% 48%, transparent 58%, rgba(138, 106, 58, 0.16) 100%),
+    radial-gradient(circle at 82% 14%, rgba(154, 122, 72, 0.07), transparent 9%),
+    radial-gradient(circle at 16% 71%, rgba(154, 122, 72, 0.05), transparent 7%),
     var(--tex-fiber),
     var(--tex-mottle),
     var(--tex-grain);
@@ -539,9 +539,9 @@ abbr[title] { text-decoration: none; }
 }
 .page--right .paper {
   background-image:
-    radial-gradient(ellipse 120% 95% at 50% 50%, transparent 58%, color-mix(in srgb, #8a6a3a 16%, transparent) 100%),
-    radial-gradient(circle at 24% 88%, color-mix(in srgb, #9a7a48 6%, transparent), transparent 8%),
-    radial-gradient(circle at 70% 31%, color-mix(in srgb, #9a7a48 4%, transparent), transparent 6%),
+    radial-gradient(ellipse 120% 95% at 50% 50%, transparent 58%, rgba(138, 106, 58, 0.16) 100%),
+    radial-gradient(circle at 24% 88%, rgba(154, 122, 72, 0.06), transparent 8%),
+    radial-gradient(circle at 70% 31%, rgba(154, 122, 72, 0.04), transparent 6%),
     var(--tex-fiber),
     var(--tex-mottle),
     var(--tex-grain);
@@ -570,7 +570,7 @@ abbr[title] { text-decoration: none; }
   background: linear-gradient(to right,
     rgba(25, 23, 20, .30),
     rgba(25, 23, 20, .08) 10%,
-    color-mix(in srgb, var(--paper) 30%, transparent) 18%,
+    rgba(238, 227, 202, 0.3) 18%,
     transparent 46%);
 }
 
@@ -740,7 +740,7 @@ abbr[title] { text-decoration: none; }
 .dish__hotspot:focus-visible .dish__name { text-decoration: underline 1px var(--red); text-underline-offset: .2em; }
 @media (hover: hover) { /* acento rojo mínimo al pasar */
   .dish__hotspot .dish__name { text-decoration: underline 1px transparent; text-underline-offset: .2em; transition: text-decoration-color .35s ease; }
-  .dish__hotspot:hover .dish__name { text-decoration-color: color-mix(in srgb, var(--red) 55%, transparent); }
+  .dish__hotspot:hover .dish__name { text-decoration-color: rgba(177, 38, 34, 0.55); }
 }
 
 .dish__plate {
@@ -781,7 +781,7 @@ abbr[title] { text-decoration: none; }
   top: calc(var(--u) * var(--pt));
   width: 1px;
   height: calc(var(--u) * (11 - var(--s) * (1 - var(--pad) - var(--top)) - var(--pt) + .3));
-  background: color-mix(in srgb, var(--red) 70%, transparent);
+  background: rgba(177, 38, 34, 0.7);
   transition: transform .45s cubic-bezier(.3, .6, .3, 1);
 }
 .dish__pin::before {
@@ -999,7 +999,7 @@ abbr[title] { text-decoration: none; }
   font-size: .7rem;
   letter-spacing: .38em;
   text-transform: uppercase;
-  color: color-mix(in srgb, var(--paper) 56%, transparent);
+  color: rgba(238, 227, 202, 0.56);
   opacity: 0;
   transition: opacity .8s ease;
 }
@@ -1028,7 +1028,7 @@ abbr[title] { text-decoration: none; }
   font-size: .64rem;
   letter-spacing: .34em;
   text-transform: uppercase;
-  color: color-mix(in srgb, var(--paper) 48%, transparent);
+  color: rgba(238, 227, 202, 0.48);
   cursor: pointer;
   opacity: 0;
   visibility: hidden;
@@ -1138,7 +1138,7 @@ abbr[title] { text-decoration: none; }
   height: 100%;
   overflow: visible;
   fill: none;
-  stroke: color-mix(in srgb, var(--red) 70%, transparent);
+  stroke: rgba(177, 38, 34, 0.7);
   stroke-width: 1;
   vector-effect: non-scaling-stroke;
 }
@@ -1250,7 +1250,7 @@ abbr[title] { text-decoration: none; }
 }
 .wsb__ring circle {
   fill: none;
-  stroke: color-mix(in srgb, var(--ink) 55%, transparent);
+  stroke: rgba(25, 23, 20, 0.55);
   stroke-width: 1;
   vector-effect: non-scaling-stroke;
   stroke-dasharray: 1;
@@ -1263,7 +1263,7 @@ abbr[title] { text-decoration: none; }
 .serving--wasabi.is-apart .wsb__ring circle {
   stroke-dashoffset: .32;
   transform: rotate(40deg);
-  stroke: color-mix(in srgb, var(--red) 60%, transparent);
+  stroke: rgba(177, 38, 34, 0.6);
 }
 
 .wsb__stroke {
@@ -1401,7 +1401,7 @@ abbr[title] { text-decoration: none; }
 }
 .omk__run {
   fill: none;
-  stroke: color-mix(in srgb, var(--ink) 45%, transparent);
+  stroke: rgba(25, 23, 20, 0.45);
   stroke-width: 1;
   vector-effect: non-scaling-stroke;
   stroke-dasharray: 1;
@@ -1499,21 +1499,21 @@ abbr[title] { text-decoration: none; }
 
 :root {
   --f-text: "EB Garamond", "Cormorant Garamond", Garamond, "Times New Roman", serif;
-  --tex-seigaiha-left: url("../assets/decor/seigaiha-izquierda.svg");
-  --tex-seigaiha-right: url("../assets/decor/seigaiha-derecha.svg");
+  --tex-koi: url("../assets/decor/koi-papel.webp");
 }
 
-/* papel: olas seigaiha muy tenues, integradas en la fibra */
+/* papel: koi grabados en tinta muy tenue, integrados en la fibra.
+   Cada página muestra un tramo distinto del mismo motivo. */
 .paper::before {
   content: "";
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: var(--tex-seigaiha-left) no-repeat center / cover;
-  opacity: .24;
+  background: var(--tex-koi) repeat-y 50% 0 / 100% auto;
+  opacity: .1;
   mix-blend-mode: multiply;
 }
-.page--right .paper::before { background-image: var(--tex-seigaiha-right); }
+.page--right .paper::before { background-position: 50% 62%; transform: scaleX(-1); }
 
 /* cuerpo */
 .page p,
@@ -1562,8 +1562,8 @@ abbr[title] { text-decoration: none; }
 /* el texto nuevo ocupa menos alto: el aire se reparte entre bloques */
 .masthead__brush { margin-top: calc(var(--u) * 1.6); }
 .block--about { margin-top: calc(var(--u) * 2.6); }
-.block--traits { margin-top: calc(var(--u) * 3.6); }
-.block--chef { margin-top: calc(var(--u) * 3.6); }
+.block--traits { margin-top: calc(var(--u) * 3.2); }
+.block--chef { margin-top: calc(var(--u) * 3.2); }
 .block--chef .block__lead { margin-top: calc(var(--u) * .6); }
 .dishes { margin-top: calc(var(--u) * 2.4); }
 .block--tools .heading,
@@ -1670,3 +1670,83 @@ abbr[title] { text-decoration: none; }
 .book[data-motion="close-front"] .face--cover,
 .book[data-motion="close-back"]  .face--backcover,
 .book[data-motion="open-back"]   .face--right { animation: face-arrive var(--turn) linear both; }
+
+/* ---------- 16. Cuerpo en Noto Sans (CJK) ----------
+   Títulos y rótulos conservan su serif; el texto corrido, listas, datos y
+   explicaciones pasan a Noto Sans JP (familia Noto Sans CJK): limpio y legible.
+   Las frases destacadas en rojo siguen en cursiva serif. */
+
+:root { --f-body: "Noto Sans JP", "Noto Sans CJK JP", "Hiragino Sans", "Helvetica Neue", Arial, sans-serif; }
+
+.page p,
+.page li,
+.page dt,
+.page dd,
+.page address {
+  font-family: var(--f-body);
+  font-weight: 400;
+  font-size: calc(var(--u) * 1.5);
+  line-height: 1.68;
+  letter-spacing: .012em;
+  color: #332F2A;
+}
+.page .trait { font-family: var(--f-body); font-weight: 400; font-size: calc(var(--u) * 1.62); letter-spacing: .03em; }
+.page .offer li { font-size: calc(var(--u) * 1.56); line-height: 1.8; }
+.page .ledger p,
+.page .ledger dt,
+.page .ledger dd,
+.page .ledger address { font-size: calc(var(--u) * 1.48); line-height: 1.66; }
+.page .ledger__lead { font-family: var(--f-body); font-weight: 500; color: var(--ink); }
+.page .ledger__note { font-size: calc(var(--u) * 1.4); font-weight: 300; }
+.page .block__lead { font-weight: 300; }
+.dish__meaning.hand { font-family: var(--f-body); font-weight: 400; font-size: calc(var(--u) * 1.38); letter-spacing: .04em; }
+.page .serving__note dd,
+.page .wsb__beat dd,
+.page .omk__step dd { font-family: var(--f-body); font-weight: 300; font-size: calc(var(--u) * 1.42); line-height: 1.55; }
+
+/* frases destacadas: siguen en serif cursiva */
+.page .hand.quote,
+.page .serving__quote.hand,
+.page .availability { font-family: var(--f-serif); font-style: italic; font-weight: 500; letter-spacing: .005em; }
+.page .ledger .availability { font-size: calc(var(--u) * 1.95); line-height: 1.32; color: var(--red); }
+/* los antetítulos rojos conservan sus versales serif */
+.page .kicker {
+  font-family: var(--f-text);
+  font-weight: 500;
+  font-size: calc(var(--u) * 1.82);
+  line-height: 1.42;
+  letter-spacing: .42em;
+  color: var(--red);
+}
+
+/* ---------- 17. Gestos en iPhone ----------
+   - manipulation: sin zoom por doble toque (los toques rápidos sobre la
+     portada ya no amplían la página); el pellizco sigue disponible.
+   - sin selección de texto ni menú contextual al mantener pulsado sobre
+     tapas, platos y navegación. */
+.scene { touch-action: manipulation; }
+.cover,
+.face__hit,
+.dish__hotspot,
+.table-nav,
+.book__shadow { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+
+/* los conceptos de Nigiri, Wasabi y Omakase son títulos: conservan sus versales serif */
+.page .serving__note dt,
+.page .wsb__beat dt {
+  font-family: var(--f-text);
+  font-weight: 500;
+  font-size: calc(var(--u) * 1.2);
+  line-height: 1.2;
+  letter-spacing: .3em;
+  color: var(--ink);
+}
+.page .omk__step dt {
+  font-family: var(--f-text);
+  font-weight: 500;
+  font-size: calc(var(--u) * 1.08);
+  line-height: 1.5;
+  letter-spacing: .12em;
+  color: var(--ink);
+}
+.page .omk__step dd { font-size: calc(var(--u) * 1.32); }
