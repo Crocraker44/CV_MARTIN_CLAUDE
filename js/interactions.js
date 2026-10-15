@@ -238,8 +238,11 @@
     const to = whole.getBoundingClientRect();
     if (!to.width) return Promise.resolve();
     const k = from.width / to.width;
-    const dx = from.left + from.width / 2 - (to.left + to.width / 2);
-    const dy = from.top + from.height / 2 - (to.top + to.height / 2);
+    // el desplazamiento se aplica en el marco local de la foto: se descuenta
+    // la escala de sus contenedores (servicio escalado en móvil, recorrido de Omakase)
+    const sx = to.width / (whole.offsetWidth || to.width);
+    const dx = (from.left + from.width / 2 - (to.left + to.width / 2)) / sx;
+    const dy = (from.top + from.height / 2 - (to.top + to.height / 2)) / sx;
     const away = { transform: `translate(${dx}px, ${dy}px) scale(${k})` };
     const home = { transform: "translate(0, 0) scale(1)" };
     whole.getAnimations().forEach((a) => a.cancel());

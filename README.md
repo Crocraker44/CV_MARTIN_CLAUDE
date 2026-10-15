@@ -29,7 +29,9 @@ references/                referencias visuales maestras; originales/ guarda los
 - Sobre la mesa, bajo la carta abierta: «Portada» y «Contraportada».
 - Teclado: ← / →.
 - Platos: clic/tap abre su servicio; segundo clic, ESC o clic fuera lo cierran. Uno a la vez.
-- Pantallas verticales: se ve una página a la vez; deslizar, tocar el borde de la otra página o usar «Página» sobre la mesa. El zoom con pellizco del navegador funciona y no cambia de página.
+- Teléfonos en vertical: la carta se vuelve alta (aprovecha toda la pantalla) y el texto crece para leerse sin zoom; una página a la vez: deslizar, tocar el borde o usar «Página». El pellizco funciona y no cambia de página.
+- Teléfonos en horizontal: la carta abierta ocupa el ancho y se desplaza en vertical.
+- Escritorio y tablet: sin cambios respecto al diseño aprobado.
 
 ## Assets
 
