@@ -7,7 +7,7 @@ Abrir `index.html` en el navegador (no requiere servidor ni compilación).
 
 ## Estado
 
-**Publicado (main).** Rama `claude/final-ajustes-tipografia-fondo-mobile`: cuerpo en Noto Sans JP, papel con koi y auditoría táctil — en revisión. Títulos en Hanami pendientes del archivo de fuente.
+**Publicado (main).** Rama `claude/final-ajustes-tipografia-fondo-mobile`: cuerpo en Noto Sans JP, papel con koi y auditoría táctil — en revisión. Titulares en Playfair Display (alternativa libre a Hanami).
 Portada · apertura · doble página interior · servicios Nigiri / Wasabi / Omakase · contraportada.
 
 ## Estructura

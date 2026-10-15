@@ -1750,3 +1750,40 @@ abbr[title] { text-decoration: none; }
   color: var(--ink);
 }
 .page .omk__step dd { font-size: calc(var(--u) * 1.32); }
+
+/* ---------- 18. Titulares en Playfair Display ----------
+   Alternativa libre (OFL) a Hanami: serif de alto contraste solo para
+   títulos y encabezados. Un único peso (500). Párrafos siguen en Noto Sans JP. */
+
+:root { --f-title: "Playfair Display", "Cormorant Garamond", Georgia, serif; }
+
+.masthead__name {
+  font-family: var(--f-title);
+  font-weight: 500;
+  font-size: calc(var(--u) * 5.1);
+  line-height: 1.08;
+  letter-spacing: -.012em;
+}
+.heading--lead {
+  font-family: var(--f-title);
+  font-weight: 500;
+  font-size: calc(var(--u) * 3.9);
+  line-height: 1.1;
+  letter-spacing: -.008em;
+}
+.heading:not(.heading--lead),
+.label {
+  font-family: var(--f-title);
+  font-weight: 500;
+  font-size: calc(var(--u) * 1.3);
+  letter-spacing: .26em;
+}
+.label { font-size: calc(var(--u) * 1.12); letter-spacing: .24em; }
+.block--tools .heading,
+.block--interests .heading { font-size: calc(var(--u) * 1.3); }
+.dish__name { font-family: var(--f-title); font-weight: 500; font-size: calc(var(--u) * 1.72); letter-spacing: .01em; }
+
+/* títulos dentro de Nigiri, Wasabi y Omakase */
+.page .serving__note dt,
+.page .wsb__beat dt { font-family: var(--f-title); font-weight: 500; font-size: calc(var(--u) * 1.12); letter-spacing: .26em; }
+.page .omk__step dt { font-family: var(--f-title); font-weight: 500; font-size: calc(var(--u) * .98); letter-spacing: .1em; }

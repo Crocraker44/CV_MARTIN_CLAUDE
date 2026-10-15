@@ -421,6 +421,10 @@
     if (document.visibilityState === "visible" && busy && Date.now() > busyUntil) settle();
   });
 
+  // los titulares viven en la página interior (oculta al cargar): se piden ya,
+  // para que estén listos antes de abrir la carta y no haya cambio de fuente a la vista
+  document.fonts?.load('500 1em "Playfair Display"').catch(() => {});
+
   setState(book.dataset.state || "closed");
   syncNav();
   // fin del arranque: a partir del segundo frame ya se puede animar
